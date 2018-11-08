@@ -39,7 +39,7 @@ public class Table extends JPanel implements ActionListener {
 	private void _setJBtnNumbers() {
 		System.out.println(Util.getMethodName());
 		for(int i=0;i<numNumber;i++) {
-			JBtnNumber[i]=new JButton("Num "+String.valueOf(i+1));
+			JBtnNumber[i]=new JButton("Num:"+String.valueOf(i+1)); // TODO 画像で置き換える
 			JBtnNumber[i].addActionListener(this);
 			add(JBtnNumber[i]);
 		}
@@ -48,10 +48,10 @@ public class Table extends JPanel implements ActionListener {
 	/* 賭けるお金のボタン */
 	private void _setJBtnMoneys() {
 		System.out.println(Util.getMethodName());
-		JBtnMoney[0]=new JButton("Money "+String.valueOf(1));
-		JBtnMoney[1]=new JButton("Money "+String.valueOf(5));
-		JBtnMoney[2]=new JButton("Money "+String.valueOf(15));
-		JBtnMoney[3]=new JButton("Money "+String.valueOf(50));
+		JBtnMoney[0]=new JButton("Money:"+String.valueOf(1));
+		JBtnMoney[1]=new JButton("Money:"+String.valueOf(5));
+		JBtnMoney[2]=new JButton("Money:"+String.valueOf(15));
+		JBtnMoney[3]=new JButton("Money:"+String.valueOf(50));
 		for(int i=0;i<numMoney;i++) {
 		add(JBtnMoney[i]);
 		}
