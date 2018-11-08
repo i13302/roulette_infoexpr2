@@ -1,8 +1,7 @@
 package roulette;
 
-import roulette.Table;
+import roulette.*;
 import javax.swing.JFrame;
-//import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class roulette{
@@ -14,13 +13,10 @@ public class roulette{
 			frame.pack();
 			frame.setVisible(true);
 			frame.setSize(600,400);
+			frame.setResizable(false);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		});
-		
-		
-//		Table table=new Table();
-		
-		
+
 		
 	}
 	

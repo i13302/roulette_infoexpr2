@@ -1,5 +1,6 @@
 package roulette;
 
+import roulette.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -19,21 +20,25 @@ public class Table extends JPanel implements ActionListener {
 	
 	private void _init_() {
 		System.out.println("_init_");
+		_setJBtnNumbers();
+		_setJBtnExit();
+		
+		setLayout(new FlowLayout());
+	}
+	
+	private void _setJBtnNumbers() {
+		System.out.println(Util.getMethodName());
 		for(int i=0;i<numNumber;i++) {
 			JBtnNumber[i]=new JButton(String.valueOf(i+1));
 			JBtnNumber[i].addActionListener(this);
 			add(JBtnNumber[i]);
 		}
-		JBtnExit.addActionListener(this);
-		add(JBtnExit);
-		
-		setLayout(new FlowLayout());
 	}
 	
-	public void mouseClicked(MouseEvent e) { 
-		mouse.x = e.getX();
-		mouse.y = e.getY();
-		repaint();
+	private void _setJBtnExit() {
+		System.out.println(Util.getMethodName());
+		JBtnExit.addActionListener(this);
+		add(JBtnExit);
 	}
 
 	@Override
