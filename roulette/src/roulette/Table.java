@@ -13,8 +13,8 @@ public class Table extends JPanel implements ActionListener {
 	private JButton[] JBtnMoney =new JButton[numMoney];  // お金のボタン
 	private JButton JBtnExit=new JButton("Exit");        //　強制終了 
 	
-	private int statusNumber=-1;  // 選択した場所
-	private int statusMoney=-1;   // 選択したお金
+	private int statusNumber;  // 選択した場所
+	private int statusMoney;   // 選択したお金
 	
 	/* Constructer */
 	public Table() {
@@ -27,12 +27,19 @@ public class Table extends JPanel implements ActionListener {
 		System.out.println("_init_");
 //		setLayout(null); 
 		setLayout(new FlowLayout()); // レイアウトの設定
+		_init_status();
 		
 		_setJBtnNumbers();
 		_setJBtnExit();
 		_setJBtnMoneys();
 		
 
+	}
+	
+	/* ステータスを初期化 */
+	private void _init_status() {
+		statusNumber=-1;
+		statusMoney=-1;
 	}
 	
 	/* 賭ける場所のボタン */
