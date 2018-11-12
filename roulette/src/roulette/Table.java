@@ -103,11 +103,10 @@ public class Table extends JPanel implements ActionListener {
 		/* END */
 	}
 
-	public boolean setLock(boolean t) {
-		statusLock=t;
-		return statusLock;
+	public void setLock(boolean t) {
+		statusLock = t;
 	}
-	
+
 	public boolean getLock() {
 		return statusLock;
 	}
