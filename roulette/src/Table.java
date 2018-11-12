@@ -1,6 +1,3 @@
-package roulette;
-
-import roulette.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

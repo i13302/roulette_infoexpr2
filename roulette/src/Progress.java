@@ -1,14 +1,9 @@
-package roulette;
-
-import roulette.*;
-//import sun.jvm.hotspot.runtime.ThreadLocalAllocBuffer;
-
 import java.awt.Frame;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-public class roulette {
+public class Progress {
 	public static void main(String args[]) {
 		System.out.println("Hello! World!");
 		SwingUtilities.invokeLater(() -> {
@@ -21,5 +16,4 @@ public class roulette {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		});
 	}
-
 }

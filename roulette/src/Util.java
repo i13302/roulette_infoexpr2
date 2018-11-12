@@ -1,5 +1,3 @@
-package roulette;
-
 public class Util {
 	/**
 	 * 実行中のメソッド名を取得します。
