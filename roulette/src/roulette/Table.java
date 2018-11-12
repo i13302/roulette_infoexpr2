@@ -19,6 +19,8 @@ public class Table extends JPanel implements ActionListener {
 	private int statusNumber; // 選択した場所
 	private int statusMoney; // 選択したお金
 
+	private boolean statusLock=false; // 選択をロック true...Locked,False...Open
+
 	/* Constructer */
 	public Table() {
 		System.out.println("Table Class");
@@ -80,19 +82,33 @@ public class Table extends JPanel implements ActionListener {
 		System.out.println(Util.getMethodName());
 		String pushBtn = e.getActionCommand(); // 押したボタンの表示名(String)
 		System.out.println(pushBtn);
-		
+
 		if (pushBtn.equals("Exit")) {
 			System.exit(0);
 		}
 		
+		if (statusLock) { // ロックされていたら，入力しない
+			return ;
+		}
+		/* START 雑なつくり getSourceを使うべき */
 		String label = pushBtn.substring(0, 3); // ラベル
 		int value = Integer.parseInt(pushBtn.substring(4)); // 値
 		
 		if (label.equals("Num")) {
-			statusMoney=value;
-		}else if (label.equals("Mon")) {
-			statusMoney=value;
+			statusNumber = value;
+		} else if (label.equals("Mon")) {
+			statusMoney = value;
 		}
+		/* END */
+	}
+
+	public boolean setLock(boolean t) {
+		statusLock=t;
+		return statusLock;
 	}
 	
+	public boolean getLock() {
+		return statusLock;
+	}
+
 }
