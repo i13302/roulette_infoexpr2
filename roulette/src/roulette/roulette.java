@@ -4,7 +4,6 @@ import roulette.*;
 //import sun.jvm.hotspot.runtime.ThreadLocalAllocBuffer;
 
 import java.awt.Frame;
-import java.awt.desktop.ScreenSleepEvent;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -21,7 +20,6 @@ public class roulette{
 			frame.setResizable(false);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		});
-		
 	}
 	
 }
