@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Table extends JPanel implements ActionListener {
+public class Table extends JPanel implements ActionListener{
 	private int numNumber = 36 + 2; // 賭ける場所の個数
 	private int numMoney = 4; // 賭けるお金のパターン
 
@@ -22,6 +22,7 @@ public class Table extends JPanel implements ActionListener {
 	public Table() {
 		System.out.println("Table Class");
 		_init_();
+		
 	}
 
 	/* 初期処理 */
@@ -83,6 +84,7 @@ public class Table extends JPanel implements ActionListener {
 
 		if (pushBtn.equals("Exit")) {
 			System.exit(0);
+			// return ;
 		}
 
 		if (statusLock) { // ロックされていたら，入力しない

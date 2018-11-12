@@ -10,3 +10,5 @@ class:
 exe:
 	cd ./bin && java Progress
 	
+clean:
+	rm ./bin/*.class
