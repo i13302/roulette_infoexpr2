@@ -1,8 +1,10 @@
 import javax.swing.*;
+import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Table extends JPanel implements ActionListener{
+public class Table extends JFrame implements ActionListener {
+	JFrame jframe;
 	private int numNumber = 36 + 2; // 賭ける場所の個数
 	private int numMoney = 4; // 賭けるお金のパターン
 
@@ -22,7 +24,7 @@ public class Table extends JPanel implements ActionListener{
 	public Table() {
 		System.out.println("Table Class");
 		_init_();
-		
+
 	}
 
 	/* 初期処理 */
@@ -30,12 +32,22 @@ public class Table extends JPanel implements ActionListener{
 		System.out.println("_init_");
 		setLayout(new FlowLayout()); // レイアウトの設定
 
+		_init_JFrame();
 		_init_status();
 
 		_setJBtnNumbers();
 		_setJBtnExit();
 		_setJBtnMoneys();
 
+	}
+
+	private void _init_JFrame() {
+		// jframe=new JFrame("Table");
+		// this.add(new Table());
+		this.setTitle("Table");
+		this.setSize(600, 400);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/* ステータスを初期化 */
@@ -80,11 +92,11 @@ public class Table extends JPanel implements ActionListener{
 		// TODO Auto-generated method stub
 		System.out.println(Util.getMethodName());
 		String pushBtn = e.getActionCommand(); // 押したボタンの表示名(String)
-		System.out.println(pushBtn);
+		System.out.printf("(statusLock,pushBtn,statusNumber,statusMoney) = (%b,%s,%d,%d) \n", statusLock, pushBtn,
+				statusNumber, statusMoney);
 
 		if (pushBtn.equals("Exit")) {
-			System.exit(0);
-			// return ;
+			System.exit(-1);
 		}
 
 		if (statusLock) { // ロックされていたら，入力しない

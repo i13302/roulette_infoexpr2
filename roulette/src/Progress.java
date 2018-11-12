@@ -4,28 +4,24 @@ import javax.swing.SwingUtilities;
 public class Progress {
 	public static void main(String args[]) {
 		System.out.println("Hello! World!");
-		// JFrame jframe;
-		// SwingUtilities.invokeLater(() -> {
-		JFrame jframe = new JFrame("Table");
-		jframe.add(new Table());
-		jframe.pack();
-		jframe.setVisible(true);
-		jframe.setSize(600, 400);
-		jframe.setResizable(false);
-		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// });
+		
+		Table table = new Table();
+		table.setVisible(true);
 		try {
 			Thread.sleep(5 * 1000);
 		} catch (InterruptedException e) {
 		}
-
+		
+		Table.setLock(true);
+		System.out.println("setLock(t) = " + Table.getLock());
+		
 		try {
 			Thread.sleep(5 * 1000);
 		} catch (InterruptedException e) {
 		}
-		jframe.setVisible(false);
+		
 		System.out.println("END");
 		System.exit(0);
-		// SwingUtilities.getAncestorOfClass(JFrame.class, getLock);
+		
 	}
 }

@@ -1,5 +1,5 @@
 
-all: class exe
+all: class exe 
 
 # Fclass:=Progress.class Table.class Util.class
 # Fjava:=Progress.java Table.java Util.java
