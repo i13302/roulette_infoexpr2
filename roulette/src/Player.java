@@ -8,5 +8,4 @@ public class Player {
 	}
 	public Wallet getWallet() { return this.wallet; }
 	public void setWallet(Wallet _wallet) { this.wallet = _wallet; }
-
 }
