@@ -19,7 +19,7 @@ public class Table extends JPanel implements ActionListener {
 	private int statusNumber; // 選択した場所
 	private int statusMoney; // 選択したお金
 
-	private boolean statusLock=false; // 選択をロック true...Locked,False...Open
+	private boolean statusLock = false; // 選択をロック true...Locked,False...Open
 
 	/* Constructer */
 	public Table() {
@@ -31,16 +31,15 @@ public class Table extends JPanel implements ActionListener {
 	private void _init_() {
 		System.out.println("_init_");
 		setLayout(new FlowLayout()); // レイアウトの設定
-		
+
 		_init_status();
-		
-		
+
 		_setJBtnNumbers();
 		_setJBtnExit();
 		_setJBtnMoneys();
 
 	}
-	
+
 	/* ステータスを初期化 */
 	private void _init_status() {
 		statusNumber = -1;
@@ -80,7 +79,7 @@ public class Table extends JPanel implements ActionListener {
 	/* イベント入力時 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		 TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 		System.out.println(Util.getMethodName());
 		String pushBtn = e.getActionCommand(); // 押したボタンの表示名(String)
 		System.out.println(pushBtn);
@@ -88,14 +87,14 @@ public class Table extends JPanel implements ActionListener {
 		if (pushBtn.equals("Exit")) {
 			System.exit(0);
 		}
-		
+
 		if (statusLock) { // ロックされていたら，入力しない
-			return ;
+			return;
 		}
 		/* START 雑なつくり getSourceを使うべき */
 		String label = pushBtn.substring(0, 3); // ラベル
 		int value = Integer.parseInt(pushBtn.substring(4)); // 値
-		
+
 		if (label.equals("Num")) {
 			statusNumber = value;
 		} else if (label.equals("Mon")) {
