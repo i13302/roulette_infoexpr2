@@ -13,10 +13,10 @@ public class Table extends JPanel implements ActionListener {
 
 	private JButton JBtnExit = new JButton("Exit"); // 強制終了
 
-	private int statusNumber; // 選択した場所
-	private int statusMoney; // 選択したお金
+	private static int statusNumber; // 選択した場所
+	private static int statusMoney; // 選択したお金
 
-	private boolean statusLock = false; // 選択をロック true...Locked,False...Open
+	private static boolean statusLock = false; // 選択をロック true...Locked,False...Open
 
 	/* Constructer */
 	public Table() {
@@ -100,11 +100,11 @@ public class Table extends JPanel implements ActionListener {
 		/* END */
 	}
 
-	public void setLock(boolean t) {
+	public static void setLock(boolean t) {
 		statusLock = t;
 	}
 
-	public boolean getLock() {
+	public static boolean getLock() {
 		return statusLock;
 	}
 
