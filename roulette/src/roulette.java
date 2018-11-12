@@ -1,4 +1,4 @@
-package roulette;
+
 
 public class roulette {
 	  public static void main(String args[]){
