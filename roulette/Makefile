@@ -2,10 +2,10 @@
 all: class exe 
 
 # Fclass:=Progress.class Table.class Util.class
-# Fjava:=Progress.java Table.java Util.java
+MainClass:=Progress.java
 
 class:
-	javac -g -d ./bin -encoding UTF-8 ./src/*.java
+	cd ./src && javac -g -d ../bin -encoding UTF-8 $(MainClass)
 
 exe:
 	cd ./bin && java Progress
