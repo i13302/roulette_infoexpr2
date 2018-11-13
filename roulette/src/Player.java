@@ -12,10 +12,6 @@ public class Player {
 		return this.wallet;
 	}
 
-	public void setWallet(Wallet _wallet) {
-		this.wallet = _wallet;
-	}
-
 	public void setCoin(int _coin) {
 		// TODO: 掛け金がWallet内にあるかどうかチェックする
 		// if ( this.wallet.getCache() - coin < 0) {
