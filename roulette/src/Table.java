@@ -94,7 +94,7 @@ public class Table extends JFrame implements ActionListener {
 		System.out.printf("(statusLock,pushBtn,statusNumber,statusMoney) = (%b,%s,%d,%d) \n", statusLock, pushBtn,
 				statusNumber, statusMoney);
 
-		if (pushBtn.equals("Exit")) {
+		if (pushBtn.equals("Exit")) { // Exitボタンでプログラムごと終了
 			System.exit(-1);
 		}
 
@@ -105,20 +105,21 @@ public class Table extends JFrame implements ActionListener {
 		String label = pushBtn.substring(0, 3); // ラベル
 		int value = Integer.parseInt(pushBtn.substring(4)); // 値
 
-		if (label.equals("Num")) {
+		if (label.equals("Num")) { // Num:%dの場合 
 			statusNumber = value;
-		} else if (label.equals("Mon")) {
+		} else if (label.equals("Mon")) { // Mon:%dの場合
 			statusMoney = value;
 		}
 		/* END */
 	}
 
-	public void setLock(boolean t) {
-		statusLock = t;
+	/* 賭けにロックをする */
+	public void setLock(boolean _t) {
+		statusLock = _t;
 	}
 
+	/* 賭けのロック状態を取得する */
 	public boolean getLock() {
 		return statusLock;
 	}
-
 }
