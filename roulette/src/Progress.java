@@ -1,4 +1,3 @@
-
 public class Progress {
 
 	// この辺の値は要調整
@@ -6,6 +5,9 @@ public class Progress {
 	private static final int dealerCache = 100000;
 
 	public static void main(String args[]) {
+		System.out.println("Hello! World!");
+		
+
 		Player player = new Player(new Wallet(playerCache));
 		Dealer dealer = new Dealer(new Wallet(dealerCache));
 		
@@ -31,7 +33,13 @@ public class Progress {
 		}
 		
 		System.out.println("END");
-		System.exit(0);
+		
+		Roulette roulette = new Roulette();
+
+		for (int i = 0; i < 38; i++) { // TODO Numberクラス
+			System.out.println(roulette.getStrRouletteValue());
+
+		}
 		
 	}
 }
