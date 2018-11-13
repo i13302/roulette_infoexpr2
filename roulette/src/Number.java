@@ -1,6 +1,11 @@
 
 public class Number {
 	private String _strnum;
+	private static enum final Range { SMALL, MEDIUM, LARGE };
+	private Range _range;
+	private static enum final Color { BLACK, RED, GREEN };
+	private Color _color;
+
 	public String getStrnum() {
 		return this._strnum;
 	}
@@ -8,8 +13,6 @@ public class Number {
 		this._strnum = val;
 	}
 
-	private static enum Range { SMALL, MEDIUM, LARGE }
-	private Range _range;
 	public Range getRange() {
 		return this._range;
 	}
@@ -17,8 +20,6 @@ public class Number {
 		this._range = val;
 	}
 
-	private static enum Color { BLACK, RED, GREEN };
-	private Color _color;
 	public Color getColor() {
 		return this._color;
 	}
