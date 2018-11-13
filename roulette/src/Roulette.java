@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class Roulette {
-	Random random;
+	private Random random;
 
 	private int minValue = 0; // 最低値
 	private int maxValue = 38; // 最大値
