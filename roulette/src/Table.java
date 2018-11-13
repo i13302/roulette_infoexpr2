@@ -122,4 +122,14 @@ public class Table extends JFrame implements ActionListener {
 	public boolean getLock() {
 		return statusLock;
 	}
+	
+	/* 現在の賭けている番号を返す */
+	public int getNumber() {
+		return statusNumber;
+	}
+	
+	/* 現在の賭けている金額を返す */
+	public int getMoney() {
+		return statusMoney;
+	}
 }
