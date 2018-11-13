@@ -20,7 +20,7 @@ public class Player {
 		this.coin = _coin;
 	}
 
-	public int getCoin(int _coin) {
+	public int getCoin() {
 		return this.coin;
 	}
 }
