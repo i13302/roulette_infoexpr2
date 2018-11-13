@@ -5,7 +5,7 @@ import java.awt.event.*;
 
 public class Table extends JFrame implements ActionListener {
 	JFrame jframe;
-	private int numNumber = 36 + 2; // 賭ける場所の個数
+	private int numNumber = 36 + 2; // 賭ける場所の個数 // TODO Numberクラス
 	private int numMoney = 4; // 賭けるお金のパターン
 
 	private JButton[] JBtnNumber = new JButton[numNumber]; // 場所のボタン
