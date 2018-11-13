@@ -1,14 +1,28 @@
 
 public class Number {
 	private String _strnum;
-	public String get_strnum() {
+	public String getStrnum() {
 		return this._strnum;
 	}
-	public void set_strnum(String val) {
+	public void setStrnum(String val) {
 		this._strnum = val;
 	}
-	String size;
-	String high_low;
-	String odd_eve;
-	String color;
+
+	private static enum Range { SMALL, MEDIUM, LARGE }
+	private Range _range;
+	public Range getRange() {
+		return this._range;
+	}
+	public void setRange(Range val) {
+		this._range = val;
+	}
+
+	private static enum Color { BLACK, RED, GREEN };
+	private Color _color;
+	public Color getColor() {
+		return this._color;
+	}
+	public void setColor(Color val) {
+		this._color = val;
+	}
 }
