@@ -11,5 +11,27 @@ public class Progress {
 		
 		player.getCoin();
 		dealer.getCoin();
+		
+		System.out.println(player.getCoin());
+		System.out.println(dealer.getCoin());
+		
+		Table table = new Table();
+		table.setVisible(true); // Windowを開く
+		try {
+			Thread.sleep(5 * 1000);
+		} catch (InterruptedException e) {
+		}
+		
+		table.setLock(true);
+		System.out.println("setLock(t) = " + table.getLock());
+		
+		try {
+			Thread.sleep(5 * 1000);
+		} catch (InterruptedException e) {
+		}
+		
+		System.out.println("END");
+		System.exit(0);
+		
 	}
 }
