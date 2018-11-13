@@ -15,10 +15,10 @@ public class Table extends JFrame implements ActionListener {
 
 	private JButton JBtnExit = new JButton("Exit"); // 強制終了
 
-	private static int statusNumber; // 選択した場所
-	private static int statusMoney; // 選択したお金
+	private int statusNumber; // 選択した場所
+	private int statusMoney; // 選択したお金
 
-	private static boolean statusLock = false; // 選択をロック true...Locked,False...Open
+	private boolean statusLock = false; // 選択をロック true...Locked,False...Open
 
 	/* Constructer */
 	public Table() {
@@ -41,9 +41,8 @@ public class Table extends JFrame implements ActionListener {
 
 	}
 
+	/* Windowの設定 */
 	private void _init_JFrame() {
-		// jframe=new JFrame("Table");
-		// this.add(new Table());
 		this.setTitle("Table");
 		this.setSize(600, 400);
 		this.setResizable(false);
@@ -114,11 +113,11 @@ public class Table extends JFrame implements ActionListener {
 		/* END */
 	}
 
-	public static void setLock(boolean t) {
+	public void setLock(boolean t) {
 		statusLock = t;
 	}
 
-	public static boolean getLock() {
+	public boolean getLock() {
 		return statusLock;
 	}
 

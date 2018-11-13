@@ -6,14 +6,14 @@ public class Progress {
 		System.out.println("Hello! World!");
 		
 		Table table = new Table();
-		table.setVisible(true);
+		table.setVisible(true); // Windowを開く
 		try {
 			Thread.sleep(5 * 1000);
 		} catch (InterruptedException e) {
 		}
 		
-		Table.setLock(true);
-		System.out.println("setLock(t) = " + Table.getLock());
+		table.setLock(true);
+		System.out.println("setLock(t) = " + table.getLock());
 		
 		try {
 			Thread.sleep(5 * 1000);
