@@ -4,7 +4,7 @@ public class Progress {
 
 		Roulette roulette = new Roulette();
 
-		for (int i = 0; i < 38; i++) {
+		for (int i = 0; i < 38; i++) { // TODO Numberクラス
 			System.out.println(roulette.getStrRouletteValue());
 
 		}

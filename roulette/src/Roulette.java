@@ -3,7 +3,7 @@ import java.util.Random;
 public class Roulette {
 	private Random random;
 
-	private int minValue = 0; // 最低値
+	private int minValue = 0; // 最低値 // TODO Numberクラス
 	private int maxValue = 38; // 最大値
 
 	public Roulette() {
@@ -25,7 +25,7 @@ public class Roulette {
 	public String getStrRouletteValue() {
 		int v = this.getIntRouletteValue();
 
-		if (v == 37) { // 37の場合は00とする
+		if (v == 37) { // 37の場合は00とする // TODO Numberクラス
 			return "00";
 		}
 		return Integer.toString(v);
