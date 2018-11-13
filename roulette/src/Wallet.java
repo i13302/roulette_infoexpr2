@@ -5,4 +5,8 @@ public class Wallet {
 	public Wallet(int _cache) {
 		this.cache = _cache;
 	}
+
+	public boolean isInsolvency() {
+		return this.cache < 0;
+	}
 }
