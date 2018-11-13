@@ -24,6 +24,7 @@ class WalletTest {
 
 	@Test
 	void testIsInsolvency() {
+		assertFalse(wallet.isInsolvency());
 		wallet.payCache(10001);
 		assertTrue(wallet.isInsolvency());
 	}

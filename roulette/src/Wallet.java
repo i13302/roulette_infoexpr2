@@ -1,6 +1,5 @@
-// テスト用のWalletクラス
 public class Wallet {
-	private int cache;
+	private int cache;	// 所持金
 
 	public Wallet(int _cache) {
 		this.cache = _cache;
@@ -15,6 +14,7 @@ public class Wallet {
 		this.cache -= _cache;
 	}
 
+	// 破産フラグ
 	public boolean isInsolvency() {
 		return this.cache < 0;
 	}
