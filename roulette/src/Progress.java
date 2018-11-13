@@ -7,6 +7,9 @@ public class Progress {
 
 	public static void main(String args[]) {
 		Player player = new Player(new Wallet(playerCache));
-		Player dealer = new Player(new Wallet(dealerCache));
+		Dealer dealer = new Dealer(new Wallet(dealerCache));
+		
+		player.getCoin();
+		dealer.getCoin();
 	}
 }
