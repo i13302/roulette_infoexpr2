@@ -81,11 +81,15 @@ class BallMain extends JPanel implements Runnable {
 	private final double angle = 2 * Math.PI / (double) numNumber; // 1つ辺りの角度
 	private int stopNum; // どこで止まるか
 	private iPoint c = new iPoint(); // Ballの座標
+	private int nowBallValue; // 現在，ボールがどの数字の上にいるか
+	private iPoint Size = new iPoint(); // Windowサイズ
 
 	private volatile Thread thread = null;
 
 	public BallMain(int sn, int xSize, int ySize) {
 		this.stopNum = sn;
+		this.Size.x = xSize;
+		this.Size.y = ySize;
 		this.initJPanel(xSize, ySize);
 		this.startThread();
 	}
@@ -128,7 +132,7 @@ class BallMain extends JPanel implements Runnable {
 	private dPoint equation(double r, double theta /* 角度 */ ) {
 		dPoint point = new dPoint(); // ボールのxy座標
 		point = toXYfromRT(r, theta);
-		point.x = point.x + (int) (circleR) + 25;
+		point.x = point.x + (int) (circleR) + 50;
 		point.y = point.y + (int) (circleR) + 25;
 
 		return point;
@@ -147,7 +151,7 @@ class BallMain extends JPanel implements Runnable {
 		// System.out.println(tmsec + "," + cx + "," + cy);
 		g.drawString("●", c.x, c.y); // ボール
 		showBanmen(g);
-
+		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
 	}
 
 	/* ボールのアニメーション */
@@ -157,7 +161,8 @@ class BallMain extends JPanel implements Runnable {
 		/* 時間で制御 */
 		// for (double i = 0.0; i <= this.getT() / 4; i += 0.001) {
 		/* 角度で調整 */
-		for (double i = 0.0; i < 4 * Math.PI + this.angle * stopNum + this.angle / 2.0; i += deltai) {
+		for (double i = 0.0; i < 4 * Math.PI + this.angle * this.stopNum + this.angle / 2.0; i += deltai) {
+			this.nowBallValue = (int) ((this.omega * i) / this.angle % numNumber);
 			dPoint xyBall = new dPoint();
 			xyBall = this.equation(circleR - 0.5, this.omega * i);
 
@@ -173,12 +178,13 @@ class BallMain extends JPanel implements Runnable {
 			} catch (InterruptedException e) {
 			}
 
-			if (i >= 4 * Math.PI * this.angle * stopNum) {
+			/* ボールの速度を調整する */
+			if (i >= 4 * Math.PI + this.angle * this.stopNum - Math.random()) {
 				deltai = 0.0001;
 				continue;
 			}
 
-			if (i >= 3 * Math.PI * this.angle * stopNum / 2.0) {
+			if (i >= 3 * Math.PI + this.angle * this.stopNum / 2.0 - Math.random()) {
 				deltai = 0.001;
 				continue;
 			}
