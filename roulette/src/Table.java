@@ -28,7 +28,9 @@ public class Table extends JFrame implements ActionListener {
 	private JButton JBtnExit = new JButton("Exit"); // 強制終了
 
 	private int statusNumber; // 選択した場所
+	private JLabel JLblStatusNumber = new JLabel(); // 選択した場所を表示
 	private int statusMoney; // 選択したお金
+	private JLabel JLblStatusMoney = new JLabel(); // 選択したお金を表示
 
 	private boolean statusLock = false; // 選択をロック true...Locked,False...Open
 
@@ -51,6 +53,7 @@ public class Table extends JFrame implements ActionListener {
 		_setJBtnNumbers();
 		_setJBtnMoneys();
 		_setJBtnExit();
+		_setJLbl();
 
 	}
 
@@ -118,6 +121,20 @@ public class Table extends JFrame implements ActionListener {
 		setBtnYLine += (5 + height);
 	}
 
+	/* ラベルの設定 */
+	private void _setJLbl() {
+		JLblStatusNumber.setText("no Select");
+		JLblStatusMoney.setText("no Select");
+
+		int width = 150, height = 15;
+		JLblStatusNumber.setBounds(20, setBtnYLine + 10, width, height);
+		JLblStatusMoney.setBounds(20 + 10 + width, setBtnYLine + 10, width, height);
+		setBtnYLine += (5 + height);
+
+		add(JLblStatusNumber);
+		add(JLblStatusMoney);
+	}
+
 	/* イベント入力時 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -140,8 +157,10 @@ public class Table extends JFrame implements ActionListener {
 
 		if (label.equals("Num")) { // Num:%dの場合
 			statusNumber = value;
+			JLblStatusNumber.setText("Select Num is " + Integer.toString(value));
 		} else if (label.equals("Mon")) { // Mon:%dの場合
 			statusMoney = value;
+			JLblStatusMoney.setText("Select Money is " + Integer.toString(value));
 		}
 		/* END */
 	}
