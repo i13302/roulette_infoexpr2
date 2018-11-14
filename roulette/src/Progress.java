@@ -4,5 +4,7 @@ public class Progress {
 
 		Ball ball = new Ball();
 		System.out.println("Main");
+		
+		System.exit(0);
 	}
 }

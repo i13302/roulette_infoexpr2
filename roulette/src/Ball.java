@@ -3,11 +3,15 @@ import javax.swing.JPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Graphics;
 
-class Point {
+class dPoint {
 	public double x;
 	public double y;
+}
+
+class iPoint {
+	public int x;
+	public int y;
 }
 
 public class Ball extends JDialog {
@@ -58,17 +62,17 @@ public class Ball extends JDialog {
 
 class BallMain extends JPanel implements Runnable {
 	private double tmsec = 0.0; // 時間
-	private double omega = 1.0; // 角速度
+	private double omega = 1.0; // 角度
 	private double r = 350; // 中心からの距離
 	private double alpha = 0.0; // 初期位相
-	private int cx = 250, cy = 250;
+	private iPoint c = new iPoint(); // Ballの座標
+	private int numNumber = 36 + 1 + 1;
 
 	private volatile Thread thread = null;
 
 	public BallMain(int xSize, int ySize) {
 		this.initJPanel(xSize, ySize);
 		this.startThread();
-
 	}
 
 	/* Windowの設定 */
@@ -97,11 +101,20 @@ class BallMain extends JPanel implements Runnable {
 		return true;
 	}
 
-	/* ボールの現在の場所を計算する */
-	private Point equation(double t /* 現在時刻 */ ) {
-		Point point = new Point(); // ボールのxy座標
-		point.x = this.r * Math.cos(this.omega * t + this.alpha);
-		point.y = this.r * Math.sin(this.omega * t + this.alpha);
+	/* r-theta座標をxy座標に変換 */
+	private dPoint toXYfromRT(double r,double theta) {
+		dPoint ret=new dPoint();
+		ret.x=r*Math.cos(theta+this.alpha);
+		ret.y=r*Math.sin(theta+this.alpha);
+		return ret;
+	}
+	
+	/* r分を足して，整形する */
+	private dPoint equation(double theta /* 角速度 */ ) {
+		dPoint point = new dPoint(); // ボールのxy座標
+		point=toXYfromRT(this.r, theta);
+		point.x = point.x + (int) (this.r);
+		point.y = point.y + (int) (this.r);
 
 		return point;
 	}
@@ -117,7 +130,8 @@ class BallMain extends JPanel implements Runnable {
 		g.setColor(new Color(100, 70, 140));
 
 		// System.out.println(tmsec + "," + cx + "," + cy);
-		g.drawString("◎", cx, cy);
+		g.drawString("◎", c.x, c.y);
+		showBanmen(g);
 
 	}
 
@@ -125,11 +139,11 @@ class BallMain extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		for (; tmsec <= this.getT() / 2; tmsec += (double) 0.001) {
-			Point xyBall = new Point();
-			xyBall = this.equation(tmsec);
+			dPoint xyBall = new dPoint();
+			xyBall = this.equation(omega * tmsec);
 
-			cx = (int) (xyBall.x) + (int) (r);
-			cy = (int) (xyBall.y) + (int) (r);
+			c.x = (int) (xyBall.x);
+			c.y = (int) (xyBall.y);
 
 			// System.out.println(tmsec + "," + xyBall.x + "," + xyBall.y + "," + cx + "," +
 			// cy);
@@ -144,5 +158,30 @@ class BallMain extends JPanel implements Runnable {
 		stopThread();
 
 		System.out.println("BallMain END");
+	}
+
+	private void showBanmen(Graphics g) {
+		double angle = 2 * Math.PI / (double) numNumber;
+		g.setColor(new Color(0, 0, 0));
+
+		dPoint tmPoint = new dPoint();
+		tmPoint = toXYfromRT(this.r, 0.0);
+
+		iPoint center = new iPoint();
+	
+		center.x =(int)r;
+		center.y =(int)r;
+
+		for (int i = 0; i < numNumber; i++) {
+			tmPoint = equation(angle * (i + 1));
+			
+			iPoint start = new iPoint();
+			start.x=(int)tmPoint.x;
+			start.y=(int)tmPoint.y;
+			
+			g.drawLine(start.x, start.y, center.x, center.y);
+//			g.drawLine(center.x, center.y, center.x, center.y);
+			System.out.println(start.x + start.y + center.x + center.y);
+		}
 	}
 }
