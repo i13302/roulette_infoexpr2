@@ -9,27 +9,28 @@ class Point {
 	public double y;
 }
 
-// public class Ball extends JFrame {
-// public Ball() {
-// this.initJFrame();
-// }
+public class Ball extends JFrame {
+	public Ball() {
+		this.initJFrame();
+	}
 
-// private void initJFrame() {
+	private void initJFrame() {
 
-// this.setTitle("Ball");
-// this.add(new BallMain());
-// this.pack();
-// // this.setLayout(new FlowLayout());
-// // this.setSize(400, 400);
-// this.setResizable(false);
-// this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setTitle("Ball");
+		this.add(new BallMain());
+		this.pack();
+		// this.setLayout(new FlowLayout());
+		// this.setSize(400, 400);
+		this.setVisible(true);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-// // BallMain ballMain = new BallMain();
-// // ballMain.setVisible(true);
-// }
-// }
+//  BallMain ballMain = new BallMain();
+//  ballMain.setVisible(true);
+	}
+}
 
-public class BallMain extends JPanel implements Runnable {
+class BallMain extends JPanel implements Runnable {
 	private double tmsec = 0.0;
 	private double omega = 1.0; // 角速度
 	private double r = 350; // 中心からの距離
@@ -95,7 +96,7 @@ public class BallMain extends JPanel implements Runnable {
 	// @Override
 	public void run() {
 		// System.out.println("run");
-		for (; tmsec<=this.getT()*1.5 ; tmsec += (double) 0.001) {
+		for (; tmsec <= this.getT() * 1.5; tmsec += (double) 0.001) {
 			Point xyBall = new Point();
 			xyBall = this.equation(tmsec);
 
