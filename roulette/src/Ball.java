@@ -157,7 +157,7 @@ class BallMain extends JPanel implements Runnable {
 		/* 時間で制御 */
 		// for (double i = 0.0; i <= this.getT() / 4; i += 0.001) {
 		/* 角度で調整 */
-		for (double i = 0.0; i < 2 * Math.PI + this.angle * stopNum + this.angle / 2.0; i += deltai) {
+		for (double i = 0.0; i < 4 * Math.PI + this.angle * stopNum + this.angle / 2.0; i += deltai) {
 			dPoint xyBall = new dPoint();
 			xyBall = this.equation(circleR - 0.5, this.omega * i);
 
@@ -173,19 +173,23 @@ class BallMain extends JPanel implements Runnable {
 			} catch (InterruptedException e) {
 			}
 
-			if (i >= 2 * Math.PI * this.angle * stopNum) {
+			if (i >= 4 * Math.PI * this.angle * stopNum) {
 				deltai = 0.0001;
 				continue;
 			}
 
-			if (i >= 2 * Math.PI * this.angle * stopNum / 2.0) {
+			if (i >= 3 * Math.PI * this.angle * stopNum / 2.0) {
 				deltai = 0.001;
 				continue;
 			}
 
-			if (i >= 2 * Math.PI) {
+			if (i >= 3 * Math.PI) {
 				deltai = 0.002;
 				continue;
+			}
+
+			if (i >= 2 * Math.PI) {
+				deltai = 0.003;
 			}
 
 		}
