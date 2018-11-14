@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.JFrame;
-import java.awt.*;
 import java.awt.event.*;
 
 class Util {
@@ -23,6 +22,8 @@ public class Table extends JFrame implements ActionListener {
 	private String labelNumber = "Num"; // 場所のラベル
 	private JButton[] JBtnMoney = new JButton[numMoney]; // お金のボタン
 	private String labelMoney = "Mon"; // お金のラベル
+	private JButton JBtnMoneyClear = new JButton("Clear"); // 選択したお金を0に戻す．
+
 	private int setBtnYLine; // y軸のどこまでボタンが設置されているのか
 
 	private JButton JBtnExit = new JButton("Exit"); // 強制終了
@@ -68,7 +69,7 @@ public class Table extends JFrame implements ActionListener {
 	/* ステータスを初期化 */
 	private void _init_status() {
 		statusNumber = -1;
-		statusMoney = -1;
+		statusMoney = 0;
 	}
 
 	/* 賭ける場所のボタン */
@@ -101,11 +102,17 @@ public class Table extends JFrame implements ActionListener {
 		JBtnMoney[3] = new JButton(labelMoney + ":" + String.valueOf(50));
 
 		int width = 90, height = 25;
-		for (int i = 0, x = 10; i < numMoney; i++, x += (width + 10)) {
+		int x = 10;
+		for (int i = 0; i < numMoney; i++, x += (width + 10)) {
 			JBtnMoney[i].addActionListener(this);
 			JBtnMoney[i].setBounds(x, setBtnYLine + 10, width, height);
 			add(JBtnMoney[i]);
 		}
+
+		JBtnMoneyClear.addActionListener(this);
+		JBtnMoneyClear.setBounds(x, setBtnYLine + 10, width, height);
+		add(JBtnMoneyClear);
+
 		setBtnYLine += (5 + height);
 	}
 
@@ -144,23 +151,30 @@ public class Table extends JFrame implements ActionListener {
 		System.out.printf("(statusLock,pushBtn,statusNumber,statusMoney) = (%b,%s,%d,%d) \n", statusLock, pushBtn,
 				statusNumber, statusMoney);
 
-		if (pushBtn.equals("Exit")) { // Exitボタンでプログラムごと終了
+		if (e.getSource() == JBtnExit) { // Exitボタンでプログラムごと終了
 			System.exit(-1);
 		}
 
 		if (statusLock) { // ロックされていたら，入力しない
 			return;
 		}
+
+		if (e.getSource() == JBtnMoneyClear) { // 賭金を0にする．
+			statusMoney = 0;
+			JLblStatusMoney.setText("Select Money is " + Integer.toString(statusMoney));
+			return;
+		}
+
 		/* START 雑なつくり getSourceを使うべき */
 		String label = pushBtn.substring(0, 3); // ラベル
 		int value = Integer.parseInt(pushBtn.substring(4)); // 値
 
 		if (label.equals("Num")) { // Num:%dの場合
 			statusNumber = value;
-			JLblStatusNumber.setText("Select Num is " + Integer.toString(value));
+			JLblStatusNumber.setText("Select Num is " + Integer.toString(statusNumber));
 		} else if (label.equals("Mon")) { // Mon:%dの場合
-			statusMoney = value;
-			JLblStatusMoney.setText("Select Money is " + Integer.toString(value));
+			statusMoney += value;
+			JLblStatusMoney.setText("Select Money is " + Integer.toString(statusMoney));
 		}
 		/* END */
 	}
