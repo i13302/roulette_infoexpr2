@@ -4,9 +4,6 @@ import javax.swing.JPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Graphics;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 
 class Point {
 	public double x;
@@ -26,26 +23,16 @@ public class Ball extends JDialog {
 
 	/* JFrameの初期設定 */
 	private void initJFrame() {
+		System.out.println("initJFrame");
+
 		ballMain = new BallMain(this.xSize, this.ySize);
-//		JDialog dialog = new JDialog(ballMain,"theTitle", Dialog.ModalityType.APPLICATION_MODAL);
 
 		this.setTitle("Ball");
 		this.add(ballMain);
-//		this.pack();
-//		this.setLayout(new FlowLayout());
 		this.setSize(800, 800);
 		this.setVisible(true);
-		System.out.println("initJFrame");
-//		this.setResizable(false);
 		this.setModal(true);
 		this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-//        WindowListener winListener = new WindowAdapter() {
-//            public void windowClosing(WindowEvent e) {
-//            	System.out.println("BallEND");
-//            }
-//        };
-//        this.addWindowListener(winListener);
-//        this.setVisible(false);
 	}
 
 	/* BallMain内のスレッドが動作中か確認 */
@@ -66,11 +53,6 @@ public class Ball extends JDialog {
 				break;
 			}
 		}
-// 
-//		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-//  BallMain ballMain = new BallMain();
-//  ballMain.setVisible(true);
 	}
 }
 
@@ -91,12 +73,7 @@ class BallMain extends JPanel implements Runnable {
 
 	/* Windowの設定 */
 	private void initJPanel(int xSize, int ySize) {
-		// this.setTitle("Ball");
 		this.setPreferredSize(new Dimension(xSize, ySize));
-		// this.setLayout(new FlowLayout());
-		// this.setSize(400, 400);
-		// this.setResizable(false);
-		// this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/* スレッドを開始 */
@@ -136,20 +113,17 @@ class BallMain extends JPanel implements Runnable {
 
 	@Override
 	public void paintComponent(Graphics g) {
-		// System.out.println("paintComponent");
 		super.paintComponent(g);
 		g.setColor(new Color(100, 70, 140));
 
 		// System.out.println(tmsec + "," + cx + "," + cy);
-		// g.drawLine(cx, cy, cx+10, cy+10);
 		g.drawString("◎", cx, cy);
 
 	}
 
 	/* ボールのアニメーション */
-	// @Override
+	@Override
 	public void run() {
-		// System.out.println("run");
 		for (; tmsec <= this.getT() / 2; tmsec += (double) 0.001) {
 			Point xyBall = new Point();
 			xyBall = this.equation(tmsec);
@@ -169,10 +143,6 @@ class BallMain extends JPanel implements Runnable {
 		}
 		stopThread();
 
-//		this.setVisible(false);
-
 		System.out.println("BallMain END");
-
 	}
-
 }
