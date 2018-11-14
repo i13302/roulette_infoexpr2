@@ -25,12 +25,14 @@ class Cast {
 }
 
 public class Ball extends JDialog {
+	private int stopNum;
 	private int xSize = 800;
 	private int ySize = 800;
 
 	BallMain ballMain;
 
-	public Ball() {
+	public Ball(int sn) {
+		this.stopNum = sn;
 		this.initJFrame();
 		this.ckDoingBallMain();
 	}
@@ -39,7 +41,7 @@ public class Ball extends JDialog {
 	private void initJFrame() {
 		System.out.println("initJFrame");
 
-		ballMain = new BallMain(this.xSize, this.ySize);
+		ballMain = new BallMain(this.stopNum, this.xSize, this.ySize);
 
 		this.setTitle("Ball");
 		this.add(ballMain);
@@ -72,16 +74,18 @@ public class Ball extends JDialog {
 
 class BallMain extends JPanel implements Runnable {
 	// private double tmsec = 0.0; // 時間
-	private double omega = 1.0; // 角度
-	private double circleR = 350; // 中心からの距離
-	private double alpha = 0.0; // 初期位相
+	private final double omega = 1.0; // 角速度
+	private final double circleR = 350; // 中心からの距離
+	private final double alpha = 0.0; // 初期位相
+	private final int numNumber = 36 + 1 + 1; // 文字盤の個数 // TODO NumberClass
+	private final double angle = 2 * Math.PI / (double) numNumber; // 1つ辺りの角度
+	private int stopNum; // どこで止まるか
 	private iPoint c = new iPoint(); // Ballの座標
-	private int numNumber = 36 + 1 + 1;
-	private double angle = 2 * Math.PI / (double) numNumber;
 
 	private volatile Thread thread = null;
 
-	public BallMain(int xSize, int ySize) {
+	public BallMain(int sn, int xSize, int ySize) {
+		this.stopNum = sn;
 		this.initJPanel(xSize, ySize);
 		this.startThread();
 	}
@@ -121,7 +125,7 @@ class BallMain extends JPanel implements Runnable {
 	}
 
 	/* r分を足して，整形する */
-	private dPoint equation(double r, double theta /* 角速度 */ ) {
+	private dPoint equation(double r, double theta /* 角度 */ ) {
 		dPoint point = new dPoint(); // ボールのxy座標
 		point = toXYfromRT(r, theta);
 		point.x = point.x + (int) (circleR) + 25;
@@ -149,12 +153,13 @@ class BallMain extends JPanel implements Runnable {
 	/* ボールのアニメーション */
 	@Override
 	public void run() {
+		double deltai = 0.004;
 		/* 時間で制御 */
 		// for (double i = 0.0; i <= this.getT() / 4; i += 0.001) {
 		/* 角度で調整 */
-		for (double i = 0.0; i < 2 * Math.PI; i += 0.001) {
+		for (double i = 0.0; i < 2 * Math.PI + this.angle * stopNum + this.angle / 2.0; i += deltai) {
 			dPoint xyBall = new dPoint();
-			xyBall = this.equation(circleR - 0.5, omega * i - 0.0);
+			xyBall = this.equation(circleR - 0.5, this.omega * i);
 
 			c = Cast.ToIntFromDbl(xyBall); // ボールの座標
 
@@ -167,6 +172,22 @@ class BallMain extends JPanel implements Runnable {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
 			}
+
+			if (i >= 2 * Math.PI * this.angle * stopNum) {
+				deltai = 0.0001;
+				continue;
+			}
+
+			if (i >= 2 * Math.PI * this.angle * stopNum / 2.0) {
+				deltai = 0.001;
+				continue;
+			}
+
+			if (i >= 2 * Math.PI) {
+				deltai = 0.002;
+				continue;
+			}
+
 		}
 		stopThread();
 
