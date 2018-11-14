@@ -14,6 +14,16 @@ class iPoint {
 	public int y;
 }
 
+/* Castする */
+class Cast {
+	public static iPoint ToIntFromDbl(dPoint d) {
+		iPoint ret = new iPoint();
+		ret.x = (int) d.x;
+		ret.y = (int) d.y;
+		return ret;
+	}
+}
+
 public class Ball extends JDialog {
 	private int xSize = 800;
 	private int ySize = 800;
@@ -61,12 +71,13 @@ public class Ball extends JDialog {
 }
 
 class BallMain extends JPanel implements Runnable {
-	private double tmsec = 0.0; // 時間
+	// private double tmsec = 0.0; // 時間
 	private double omega = 1.0; // 角度
-	private double r = 350; // 中心からの距離
+	private double circleR = 350; // 中心からの距離
 	private double alpha = 0.0; // 初期位相
 	private iPoint c = new iPoint(); // Ballの座標
 	private int numNumber = 36 + 1 + 1;
+	private double angle = 2 * Math.PI / (double) numNumber;
 
 	private volatile Thread thread = null;
 
@@ -102,19 +113,19 @@ class BallMain extends JPanel implements Runnable {
 	}
 
 	/* r-theta座標をxy座標に変換 */
-	private dPoint toXYfromRT(double r,double theta) {
-		dPoint ret=new dPoint();
-		ret.x=r*Math.cos(theta+this.alpha);
-		ret.y=r*Math.sin(theta+this.alpha);
+	private dPoint toXYfromRT(double r, double theta) {
+		dPoint ret = new dPoint();
+		ret.x = r * Math.cos(theta + this.alpha);
+		ret.y = r * Math.sin(theta + this.alpha);
 		return ret;
 	}
-	
+
 	/* r分を足して，整形する */
-	private dPoint equation(double theta /* 角速度 */ ) {
+	private dPoint equation(double r, double theta /* 角速度 */ ) {
 		dPoint point = new dPoint(); // ボールのxy座標
-		point=toXYfromRT(this.r, theta);
-		point.x = point.x + (int) (this.r);
-		point.y = point.y + (int) (this.r);
+		point = toXYfromRT(r, theta);
+		point.x = point.x + (int) (circleR) + 25;
+		point.y = point.y + (int) (circleR) + 25;
 
 		return point;
 	}
@@ -127,10 +138,10 @@ class BallMain extends JPanel implements Runnable {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(new Color(100, 70, 140));
+		g.setColor(new Color(255, 0, 0));
 
 		// System.out.println(tmsec + "," + cx + "," + cy);
-		g.drawString("◎", c.x, c.y);
+		g.drawString("●", c.x, c.y); // ボール
 		showBanmen(g);
 
 	}
@@ -138,12 +149,14 @@ class BallMain extends JPanel implements Runnable {
 	/* ボールのアニメーション */
 	@Override
 	public void run() {
-		for (; tmsec <= this.getT() / 2; tmsec += (double) 0.001) {
+		/* 時間で制御 */
+		// for (double i = 0.0; i <= this.getT() / 4; i += 0.001) {
+		/* 角度で調整 */
+		for (double i = 0.0; i < 2 * Math.PI; i += 0.001) {
 			dPoint xyBall = new dPoint();
-			xyBall = this.equation(omega * tmsec);
+			xyBall = this.equation(circleR - 0.5, omega * i - 0.0);
 
-			c.x = (int) (xyBall.x);
-			c.y = (int) (xyBall.y);
+			c = Cast.ToIntFromDbl(xyBall); // ボールの座標
 
 			// System.out.println(tmsec + "," + xyBall.x + "," + xyBall.y + "," + cx + "," +
 			// cy);
@@ -161,26 +174,21 @@ class BallMain extends JPanel implements Runnable {
 	}
 
 	private void showBanmen(Graphics g) {
-		double angle = 2 * Math.PI / (double) numNumber;
 		g.setColor(new Color(0, 0, 0));
 
-		dPoint tmPoint = new dPoint();
-		tmPoint = toXYfromRT(this.r, 0.0);
-
-		iPoint center = new iPoint();
-	
-		center.x =(int)r;
-		center.y =(int)r;
+		iPoint center = new iPoint(); // 中心座標
+		center = Cast.ToIntFromDbl(equation(0.0, 0.0));
 
 		for (int i = 0; i < numNumber; i++) {
-			tmPoint = equation(angle * (i + 1));
-			
-			iPoint start = new iPoint();
-			start.x=(int)tmPoint.x;
-			start.y=(int)tmPoint.y;
-			
-			g.drawLine(start.x, start.y, center.x, center.y);
-//			g.drawLine(center.x, center.y, center.x, center.y);
+			iPoint start = new iPoint(); // 線の始点座標
+			start = Cast.ToIntFromDbl(equation(circleR, angle * (i + 1)));
+
+			iPoint drawStrNum = new iPoint(); // 文字盤の座標
+			drawStrNum = Cast.ToIntFromDbl(equation(circleR, angle * (i + 1) - angle / 2.0));
+
+			g.drawLine(start.x, start.y, center.x, center.y); // 線を引く
+			g.drawString(Integer.toString(i), drawStrNum.x, drawStrNum.y); // 文字盤を書く
+
 			System.out.println(start.x + start.y + center.x + center.y);
 		}
 	}
