@@ -7,7 +7,7 @@ public class Progress {
 		Ball ball = new Ball();
 //		 ball.add(new(BallMain()));
 		// ball.setVisible(true);
-		// BallMain ballmain=new BallMain();
+//		 BallMain ballmain=new BallMain();
 //		JFrame frame=new JFrame("");
 //		frame.add(new Ball());
 //		frame.pack();

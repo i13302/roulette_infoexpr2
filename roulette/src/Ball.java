@@ -1,29 +1,73 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Graphics;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 class Point {
 	public double x;
 	public double y;
 }
 
-public class Ball extends JFrame {
+public class Ball extends JDialog {
+	private int xSize = 800;
+	private int ySize = 800;
+
+	BallMain ballMain;
+
 	public Ball() {
 		this.initJFrame();
+		this.ckDoingBallMain();
 	}
 
+	/* JFrameの初期設定 */
 	private void initJFrame() {
+		ballMain = new BallMain(this.xSize, this.ySize);
+//		JDialog dialog = new JDialog(ballMain,"theTitle", Dialog.ModalityType.APPLICATION_MODAL);
 
 		this.setTitle("Ball");
-		this.add(new BallMain());
-		this.pack();
-		// this.setLayout(new FlowLayout());
-		// this.setSize(400, 400);
+		this.add(ballMain);
+//		this.pack();
+//		this.setLayout(new FlowLayout());
+		this.setSize(800, 800);
 		this.setVisible(true);
-		this.setResizable(false);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		System.out.println("initJFrame");
+//		this.setResizable(false);
+		this.setModal(true);
+		this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+//        WindowListener winListener = new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {
+//            	System.out.println("BallEND");
+//            }
+//        };
+//        this.addWindowListener(winListener);
+//        this.setVisible(false);
+	}
+
+	/* BallMain内のスレッドが動作中か確認 */
+	private void ckDoingBallMain() {
+		for (;;) { // 500msecに1回確認する．
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+			}
+
+			boolean t = ballMain.getThreadStatus();
+			if (!t) { // 動作が終わっていたら，
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+				}
+				this.setVisible(false); // 自分を閉じる
+				break;
+			}
+		}
+// 
+//		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 //  BallMain ballMain = new BallMain();
 //  ballMain.setVisible(true);
@@ -31,7 +75,7 @@ public class Ball extends JFrame {
 }
 
 class BallMain extends JPanel implements Runnable {
-	private double tmsec = 0.0;
+	private double tmsec = 0.0; // 時間
 	private double omega = 1.0; // 角速度
 	private double r = 350; // 中心からの距離
 	private double alpha = 0.0; // 初期位相
@@ -39,22 +83,23 @@ class BallMain extends JPanel implements Runnable {
 
 	private volatile Thread thread = null;
 
-	public BallMain() {
-		this.initJPanel();
+	public BallMain(int xSize, int ySize) {
+		this.initJPanel(xSize, ySize);
 		this.startThread();
 
 	}
 
 	/* Windowの設定 */
-	private void initJPanel() {
+	private void initJPanel(int xSize, int ySize) {
 		// this.setTitle("Ball");
-		this.setPreferredSize(new Dimension(800, 800));
+		this.setPreferredSize(new Dimension(xSize, ySize));
 		// this.setLayout(new FlowLayout());
 		// this.setSize(400, 400);
 		// this.setResizable(false);
 		// this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	/* スレッドを開始 */
 	private void startThread() {
 		if (thread == null) {
 			thread = new Thread(this);
@@ -62,8 +107,17 @@ class BallMain extends JPanel implements Runnable {
 		}
 	}
 
+	/* スレッドを終了 */
 	private void stopThread() {
 		thread = null;
+	}
+
+	/* スレッドの状態を得る */
+	public boolean getThreadStatus() {
+		if (thread == null) { // 止まっている
+			return false;
+		}
+		return true;
 	}
 
 	/* ボールの現在の場所を計算する */
@@ -96,7 +150,7 @@ class BallMain extends JPanel implements Runnable {
 	// @Override
 	public void run() {
 		// System.out.println("run");
-		for (; tmsec <= this.getT() * 1.5; tmsec += (double) 0.001) {
+		for (; tmsec <= this.getT() / 2; tmsec += (double) 0.001) {
 			Point xyBall = new Point();
 			xyBall = this.equation(tmsec);
 
@@ -113,6 +167,12 @@ class BallMain extends JPanel implements Runnable {
 			} catch (InterruptedException e) {
 			}
 		}
+		stopThread();
+
+//		this.setVisible(false);
+
+		System.out.println("BallMain END");
+
 	}
 
 }
