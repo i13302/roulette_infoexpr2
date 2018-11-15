@@ -1,7 +1,7 @@
 
 public class Number {
 	private String _strnum;
-	public static enum final Range { SMALL, MEDIUM, LARGE };
+	public static enum final Range { ZERO, SMALL, MEDIUM, LARGE };
 	private Range _range;
 	public static enum final Color { BLACK, RED, GREEN };
 	private Color _color;
