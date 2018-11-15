@@ -2,14 +2,14 @@
 	"configurations": [
 		{
 			"type": "java",
-			"name": "Debug (Launch)",
+			"name": "CodeLens (Launch) - roulette",
 			"request": "launch",
 			"cwd": "${workspaceFolder}",
 			"console": "internalConsole",
 			"stopOnEntry": false,
-			"mainClass": "Progress",
+			"mainClass": "roulette/roulette.roulette",
 			"args": "",
-			"preLaunchTask": "build java",
+			"projectName": "roulette"
 		}
 	]
 }

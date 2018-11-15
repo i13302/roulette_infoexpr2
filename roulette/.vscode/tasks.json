@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build java",
+			"command": "javac",
+			"type": "shell",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"isBackground": false,
+			"args": [
+				"-g",
+				"-d",
+				"${workspaceRoot}/bin",
+				"-encoding",
+				"UTF-8",
+				"${workspaceRoot}/src/*.java"
+			],
+			"problemMatcher": [],
+			"options": {
+				"env": {
+					"PYTHONIOENCODING": "UTF-8"
+				}
+			}
+		}
+	]
+}
