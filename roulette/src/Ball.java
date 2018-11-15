@@ -83,7 +83,7 @@ class BallMain extends JPanel implements Runnable {
 	private final int numNumber = 36 + 1 + 1; // 文字盤の個数 // TODO NumberClass
 	private final double angle = 2 * Math.PI / (double) numNumber; // 1つ辺りの角度
 	private int stopNum; // どこで止まるか
-	private iPoint c = new iPoint(); // Ballの座標
+	private iPoint nowBallPoint = new iPoint(); // Ballの座標
 	private int nowBallValue; // 現在，ボールがどの数字の上にいるか
 	private iPoint Size = new iPoint(); // Windowサイズ
 
@@ -117,10 +117,7 @@ class BallMain extends JPanel implements Runnable {
 
 	/* スレッドの状態を得る */
 	public boolean getThreadStatus() {
-		if (thread == null) { // 止まっている
-			return false;
-		}
-		return true;
+		return (thread != null);
 	}
 
 	/* r-theta座標をxy座標に変換 */
@@ -169,7 +166,7 @@ class BallMain extends JPanel implements Runnable {
 		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
 
 		g.setColor(new Color(255, 0, 0));
-		g.drawString("●", c.x, c.y); // ボール
+		g.drawString("●", nowBallPoint.x, nowBallPoint.y); // ボール
 	}
 
 	/* ボールのアニメーション */
@@ -184,7 +181,7 @@ class BallMain extends JPanel implements Runnable {
 			dPoint xyBall = new dPoint();
 			xyBall = this.equation(circleR - 30, this.omega * i);
 
-			c = Cast.ToIntFromDbl(xyBall); // ボールの座標
+			nowBallPoint = Cast.ToIntFromDbl(xyBall); // ボールの座標
 
 			repaint();
 
