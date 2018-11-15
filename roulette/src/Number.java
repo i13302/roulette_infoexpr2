@@ -5,6 +5,12 @@ public class Number {
 	private Range _range;
 	public static enum final Color { BLACK, RED, GREEN };
 	private Color _color;
+	
+	Number(String strnum, Range range, Color color){
+		setStrNum(strnum);
+		setRange(range);
+		setColor(color);
+	}
 
 	public String getStrNum() {
 		return this._strnum;
