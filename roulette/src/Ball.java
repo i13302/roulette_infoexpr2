@@ -62,7 +62,7 @@ public class Ball extends JDialog {
 			boolean t = ballMain.getThreadStatus();
 			if (!t) { // 動作が終わっていたら，
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(10 * 1000);
 				} catch (InterruptedException e) {
 				}
 				this.setVisible(false); // 自分を閉じる
@@ -161,7 +161,7 @@ class BallMain extends JPanel implements Runnable {
 		/* 時間で制御 */
 		// for (double i = 0.0; i <= this.getT() / 4; i += 0.001) {
 		/* 角度で調整 */
-		for (double i = 0.0; i < 4 * Math.PI + this.angle * this.stopNum + this.angle / 2.0; i += deltai) {
+		for (double i = Math.random(); i < 4 * Math.PI + this.angle * this.stopNum + this.angle / 2.0; i += deltai) {
 			this.nowBallValue = (int) ((this.omega * i) / this.angle % numNumber);
 			dPoint xyBall = new dPoint();
 			xyBall = this.equation(circleR - 0.5, this.omega * i);
