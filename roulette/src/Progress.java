@@ -1,4 +1,4 @@
-public class Progress {
+public class Progress {		
 
 	// この辺の値は要調整
 	private static final int playerCache = 100000;
@@ -8,7 +8,7 @@ public class Progress {
 		System.out.println("Hello! World!");
 		Player player = new Player(new Wallet(playerCache));
 		Dealer dealer = new Dealer(new Wallet(dealerCache));
-		
+						
 		Table table = new Table();
 		table.setVisible(true); // Windowを開く
 
@@ -24,8 +24,6 @@ public class Progress {
 			Thread.sleep(5 * 1000);
 		} catch (InterruptedException e) {
 		}
-
-
 		
 		Roulette roulette = new Roulette();
 
@@ -33,6 +31,8 @@ public class Progress {
 			System.out.println(roulette.getStrRouletteValue());
 
 		}
+    Ball ball = new Ball(28);
+
 		System.out.println("END");
 		System.exit(0);
 		
