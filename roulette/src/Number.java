@@ -5,6 +5,12 @@ public class Number {
 	private Range _range;
 	public static enum final Color { BLACK, RED, GREEN };
 	private Color _color;
+	
+	public Number(String strNum, Range range, Color color){
+		this._strnum = strNum;
+		this._range = range;
+		this._color = color;
+	}
 
 	public String getStrNum() {
 		return this._strnum;
