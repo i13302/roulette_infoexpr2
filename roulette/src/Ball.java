@@ -24,6 +24,14 @@ class Cast {
 	}
 }
 
+/* よく使う色 */
+class myColor {
+	public static final Color RED = new Color(0xFF, 0, 0);
+	public static final Color GREEN = new Color(0, 0xFF, 0);
+	public static final Color BLACK = new Color(0, 0, 0);
+	public static final Color WHITE = new Color(0xFF, 0xFF, 0xFF);
+}
+
 public class Ball extends JDialog {
 	private int stopNum;
 	private int xSize = 800;
@@ -138,11 +146,26 @@ class BallMain extends JPanel implements Runnable {
 		return 2 * Math.PI / omega;
 	}
 
+	/* 数字に対応する色に合わせて，g.setColor()を行う． */
+	private void setColorAccordeNum(Graphics g, int num) {
+		/* とりあえず */
+		if (num == 0 || num == 37) {
+			g.setColor(myColor.GREEN);
+		} else if (num % 2 == 0) {
+			g.setColor(myColor.RED);
+		} else {
+			g.setColor(myColor.BLACK);
+		}
+	}
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		showBanmen(g);
+
+		/* 文字色 */
+		this.setColorAccordeNum(g, this.nowBallValue);
 		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
 
 		g.setColor(new Color(255, 0, 0));
@@ -197,7 +220,6 @@ class BallMain extends JPanel implements Runnable {
 	}
 
 	private void showBanmen(Graphics g) {
-		g.setColor(new Color(0, 0, 0));
 
 		iPoint center = new iPoint(); // 中心座標
 		center = Cast.ToIntFromDbl(equation(0.0, 0.0));
@@ -207,14 +229,20 @@ class BallMain extends JPanel implements Runnable {
 			start = Cast.ToIntFromDbl(equation(circleR, angle * (i)));
 			iPoint next = new iPoint(); // 次の始点
 			next = Cast.ToIntFromDbl(equation(circleR, angle * (i + 1)));
-			// g.drawLine(start.x, start.y, center.x, center.y); // 線を引く
+
+			/* 一つの三角形の色 */
+			this.setColorAccordeNum(g, i);
 
 			int poly_x[] = { start.x, next.x, center.x };
 			int poly_y[] = { start.y, next.y, center.y };
-			g.drawPolygon(poly_x, poly_y, 3);
+			g.fillPolygon(poly_x, poly_y, 3);
+
+			g.setColor(myColor.BLACK);
+			g.drawLine(start.x, start.y, center.x, center.y); // 線を引く
 
 			iPoint drawStrNum = new iPoint(); // 文字盤の座標
 			drawStrNum = Cast.ToIntFromDbl(equation(circleR - 20, angle * (i + 1) - angle / 2.0));
+			g.setColor(myColor.WHITE);
 			g.drawString(Integer.toString(i), drawStrNum.x, drawStrNum.y); // 文字盤を書く
 
 		}
