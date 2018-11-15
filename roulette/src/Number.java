@@ -1,15 +1,15 @@
 
 public class Number {
 	private String _strnum;
-	private static enum final Range { SMALL, MEDIUM, LARGE };
+	public static enum final Range { SMALL, MEDIUM, LARGE };
 	private Range _range;
-	private static enum final Color { BLACK, RED, GREEN };
+	public static enum final Color { BLACK, RED, GREEN };
 	private Color _color;
 
-	public String getStrnum() {
+	public String getStrNum() {
 		return this._strnum;
 	}
-	public void setStrnum(String val) {
+	public void setStrNum(String val) {
 		this._strnum = val;
 	}
 
