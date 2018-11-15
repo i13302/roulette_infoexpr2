@@ -24,7 +24,8 @@ public class Table extends JFrame implements ActionListener {
 	private String labelMoney = "Mon"; // お金のラベル
 	private JButton JBtnMoneyClear = new JButton("Clear"); // 選択したお金を0に戻す．
 
-	private int setBtnYLine; // y軸のどこまでボタンが設置されているのか
+	private int setBtnNumberYLine; // y軸のどこまでボタンが設置されているのか場所
+	private int setBtnMoneyYLine; // 同賭金
 
 	private JButton JBtnExit = new JButton("Exit"); // 強制終了
 
@@ -61,7 +62,7 @@ public class Table extends JFrame implements ActionListener {
 	/* Windowの設定 */
 	private void _init_JFrame() {
 		this.setTitle("Table");
-		this.setSize(600, 400);
+		this.setSize(500, 600);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -77,17 +78,18 @@ public class Table extends JFrame implements ActionListener {
 		System.out.println(Util.getMethodName());
 
 		int width = 90, height = 25;
-		for (int i = 0, x = 10, y = 10; i < numNumber; i++, x += (width + 10)) {
+		for (int i = 0, x = 200, y = 10; i < numNumber; i++, x += (width + 10)) {
 			JBtnNumber[i] = new JButton(labelNumber + ":" + String.valueOf(i + 1)); // TODO 画像で置き換える
 			JBtnNumber[i].addActionListener(this);
 			JBtnNumber[i].setBounds(x, y, width, height);
 			add(JBtnNumber[i]);
-			if ((i + 1) % 5 == 0) {
-				x = 10 - (width + 10); // x座標をリセット
+			if ((i + 1) % 3 == 0) {
+				x = 200 - (width + 10); // x座標をリセット
 
 				y += (height + 5); // y座標を更新
 			}
-			setBtnYLine = y + height; // 現在，どこまでボタンが置いているのか保存
+			setBtnNumberYLine = y + height; // 現在，どこまでボタンが置いているのか保存ボタン
+
 		}
 
 	}
@@ -102,18 +104,21 @@ public class Table extends JFrame implements ActionListener {
 		JBtnMoney[3] = new JButton(labelMoney + ":" + String.valueOf(50));
 
 		int width = 90, height = 25;
-		int x = 10;
-		for (int i = 0; i < numMoney; i++, x += (width + 10)) {
+		int x = 20, y = 10;
+		for (int i = 0; i < numMoney; i++, y += (height + 10)) {
 			JBtnMoney[i].addActionListener(this);
-			JBtnMoney[i].setBounds(x, setBtnYLine + 10, width, height);
+			JBtnMoney[i].setBounds(x, y + 10, width, height);
+
 			add(JBtnMoney[i]);
 		}
 
 		JBtnMoneyClear.addActionListener(this);
-		JBtnMoneyClear.setBounds(x, setBtnYLine + 10, width, height);
+		JBtnMoneyClear.setBounds(x, y + 10, width, height);
+
 		add(JBtnMoneyClear);
 
-		setBtnYLine += (5 + height);
+		setBtnMoneyYLine = (y + height);
+
 	}
 
 	/* 強制終了ボタン */
@@ -122,10 +127,12 @@ public class Table extends JFrame implements ActionListener {
 
 		int width = 100, height = 30;
 		JBtnExit.addActionListener(this);
-		JBtnExit.setBounds(200, setBtnYLine + 10, width, height);
+		JBtnExit.setBounds(20, setBtnMoneyYLine + 10, width, height);
+
 		add(JBtnExit);
 
-		setBtnYLine += (5 + height);
+		setBtnMoneyYLine += (5 + height);
+
 	}
 
 	/* ラベルの設定 */
@@ -134,9 +141,11 @@ public class Table extends JFrame implements ActionListener {
 		JLblStatusMoney.setText("no Select");
 
 		int width = 150, height = 15;
-		JLblStatusNumber.setBounds(20, setBtnYLine + 10, width, height);
-		JLblStatusMoney.setBounds(20 + 10 + width, setBtnYLine + 10, width, height);
-		setBtnYLine += (5 + height);
+		JLblStatusNumber.setBounds(20, setBtnMoneyYLine + 10, width, height);
+
+		JLblStatusMoney.setBounds(20, setBtnMoneyYLine + 10 + height, width, height);
+
+		setBtnMoneyYLine += (5 + height * 2);
 
 		add(JLblStatusNumber);
 		add(JLblStatusMoney);
