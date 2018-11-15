@@ -53,22 +53,17 @@ public class Ball extends JDialog {
 
 	/* BallMain内のスレッドが動作中か確認 */
 	private void ckDoingBallMain() {
-		for (;;) { // 500msecに1回確認する．
+		for (; ballMain.getThreadStatus();) { // 500msecに1回確認する．
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
 			}
-
-			boolean t = ballMain.getThreadStatus();
-			if (!t) { // 動作が終わっていたら，
-				try {
-					Thread.sleep(10 * 1000);
-				} catch (InterruptedException e) {
-				}
-				this.setVisible(false); // 自分を閉じる
-				break;
-			}
 		}
+		try { // 値の確認ように10秒待つ
+			Thread.sleep(10 * 1000);
+		} catch (InterruptedException e) {
+		}
+		this.setVisible(false); // 自分を閉じる
 	}
 }
 
