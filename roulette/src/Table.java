@@ -221,7 +221,7 @@ public class Table extends JFrame implements ActionListener {
 	        add(new Number( "5", SMALL, RED)),
 	        add(new Number( "6", SMALL, BLACK)),
 	        add(new Number( "7", SMALL, RED)),
-	        add(new Number( "8", SMALL)),
+	        add(new Number( "8", SMALL, BLACK)),
 	        add(new Number( )),
 	        add(new Number( )),
 	        add(new Number( )),
