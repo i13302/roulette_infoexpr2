@@ -2,6 +2,7 @@
 https://hackmd.io/by2d2QIlQbyduNz53AxSeQ
 
 ## 参考文献
+1. Webページ名，URL，閲覧日
 ### i13302
 1. EventObject (Java Platform SE 8 )，https://docs.oracle.com/javase/jp/8/docs/api/java/util/EventObject.html，2018/11/15
 1. 座標指定で配置する - レイアウトマネージャーを無効にする - Swing，https://www.javadrive.jp/tutorial/nulllayout/index1.html，2018/11/15
