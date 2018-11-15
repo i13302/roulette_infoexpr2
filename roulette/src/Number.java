@@ -6,10 +6,10 @@ public class Number {
 	public static enum final Color { BLACK, RED, GREEN };
 	private Color _color;
 	
-	Number(String strnum, Range range, Color color){
-		setStrNum(strnum);
-		setRange(range);
-		setColor(color);
+	Number(String strNum, Range range, Color color){
+		this._strnum = strNum;
+		this._range = range;
+		this._color = color;
 	}
 
 	public String getStrNum() {
