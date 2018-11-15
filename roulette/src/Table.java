@@ -1,6 +1,9 @@
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import java.awt.event.*;
+import javax.swing.JLabel;
 
 class Util {
 	/**
@@ -207,4 +210,10 @@ public class Table extends JFrame implements ActionListener {
 	public int getMoney() {
 		return statusMoney;
 	}
+	
+	List<Number> numbers = new ArrayList<Number>() {
+	      {
+	        add(new Number("0", )),
+	        add(new Number(...)),
+	      }
 }
