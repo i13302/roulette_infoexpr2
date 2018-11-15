@@ -141,12 +141,12 @@ class BallMain extends JPanel implements Runnable {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setColor(new Color(255, 0, 0));
 
-		// System.out.println(tmsec + "," + cx + "," + cy);
-		g.drawString("●", c.x, c.y); // ボール
 		showBanmen(g);
 		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
+
+		g.setColor(new Color(255, 0, 0));
+		g.drawString("●", c.x, c.y); // ボール
 	}
 
 	/* ボールのアニメーション */
@@ -159,12 +159,9 @@ class BallMain extends JPanel implements Runnable {
 		for (double i = Math.random(); i < 4 * Math.PI + this.angle * this.stopNum + this.angle / 2.0; i += deltai) {
 			this.nowBallValue = (int) ((this.omega * i) / this.angle % numNumber);
 			dPoint xyBall = new dPoint();
-			xyBall = this.equation(circleR - 0.5, this.omega * i);
+			xyBall = this.equation(circleR - 30, this.omega * i);
 
 			c = Cast.ToIntFromDbl(xyBall); // ボールの座標
-
-			// System.out.println(tmsec + "," + xyBall.x + "," + xyBall.y + "," + cx + "," +
-			// cy);
 
 			repaint();
 
@@ -207,15 +204,19 @@ class BallMain extends JPanel implements Runnable {
 
 		for (int i = 0; i < numNumber; i++) {
 			iPoint start = new iPoint(); // 線の始点座標
-			start = Cast.ToIntFromDbl(equation(circleR, angle * (i + 1)));
+			start = Cast.ToIntFromDbl(equation(circleR, angle * (i)));
+			iPoint next = new iPoint(); // 次の始点
+			next = Cast.ToIntFromDbl(equation(circleR, angle * (i + 1)));
+			// g.drawLine(start.x, start.y, center.x, center.y); // 線を引く
+
+			int poly_x[] = { start.x, next.x, center.x };
+			int poly_y[] = { start.y, next.y, center.y };
+			g.drawPolygon(poly_x, poly_y, 3);
 
 			iPoint drawStrNum = new iPoint(); // 文字盤の座標
-			drawStrNum = Cast.ToIntFromDbl(equation(circleR, angle * (i + 1) - angle / 2.0));
-
-			g.drawLine(start.x, start.y, center.x, center.y); // 線を引く
+			drawStrNum = Cast.ToIntFromDbl(equation(circleR - 20, angle * (i + 1) - angle / 2.0));
 			g.drawString(Integer.toString(i), drawStrNum.x, drawStrNum.y); // 文字盤を書く
 
-			System.out.println(start.x + start.y + center.x + center.y);
 		}
 	}
 }
