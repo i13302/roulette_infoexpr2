@@ -6,33 +6,26 @@ public class Progress {
 
 	public static void main(String args[]) {
 		System.out.println("Hello! World!");
-		
-
 		Player player = new Player(new Wallet(playerCache));
 		Dealer dealer = new Dealer(new Wallet(dealerCache));
 		
-		player.getCoin();
-		dealer.getCoin();
-		
-		System.out.println(player.getCoin());
-		System.out.println(dealer.getCoin());
-		
 		Table table = new Table();
 		table.setVisible(true); // Windowを開く
-		try {
+
+		try { // 制限時間まで待っている
 			Thread.sleep(5 * 1000);
 		} catch (InterruptedException e) {
 		}
-		
-		table.setLock(true);
+
+		table.setLock(true); // 制限時間が来たら，もう選択できない
 		System.out.println("setLock(t) = " + table.getLock());
-		
+
 		try {
 			Thread.sleep(5 * 1000);
 		} catch (InterruptedException e) {
 		}
-		
-		System.out.println("END");
+
+
 		
 		Roulette roulette = new Roulette();
 
@@ -40,6 +33,8 @@ public class Progress {
 			System.out.println(roulette.getStrRouletteValue());
 
 		}
+		System.out.println("END");
+		System.exit(0);
 		
 	}
 }
