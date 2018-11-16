@@ -32,6 +32,24 @@ class myColor {
 	public static final Color WHITE = new Color(0xFF, 0xFF, 0xFF);
 }
 
+class NumOrder {
+	private final int numNumber = 38;
+	public final static int[] numOrder = { 5, 22, 34, 15, 3, 24, 36, 13, 1, 37, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6,
+			21, 33, 16, 4, 23, 35, 14, 2, 0, 28, 9, 26, 30, 11, 7, 20, 32, 17 }; // arr[0番目]->5，arr[1番目-]>22
+	public int[] numSearch = new int[numNumber]; // arr[5]->0番目，arr[22]->1番目
+
+	public NumOrder() {
+		search();
+	}
+
+	private void search() {
+		for (int i = 0; i < numNumber; i++) {
+			numSearch[numOrder[i]] = i;
+		}
+	}
+
+}
+
 public class Ball extends JDialog {
 	private int stopNum;
 	private int xSize = 800;
@@ -86,11 +104,12 @@ class BallMain extends JPanel implements Runnable {
 	private iPoint nowBallPoint = new iPoint(); // Ballの座標
 	private int nowBallValue; // 現在，ボールがどの数字の上にいるか
 	private iPoint Size = new iPoint(); // Windowサイズ
+	private NumOrder numorder = new NumOrder(); // 数字の順番
 
 	private volatile Thread thread = null;
 
 	public BallMain(int sn, int xSize, int ySize) {
-		this.stopNum = sn;
+		this.stopNum = numorder.numSearch[sn];
 		this.Size.x = xSize;
 		this.Size.y = ySize;
 		this.initJPanel(xSize, ySize);
@@ -165,7 +184,7 @@ class BallMain extends JPanel implements Runnable {
 		this.setColorAccordeNum(g, this.nowBallValue);
 		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
 
-		g.setColor(new Color(255, 0, 0));
+		g.setColor(myColor.WHITE);
 		g.drawString("●", nowBallPoint.x, nowBallPoint.y); // ボール
 	}
 
@@ -227,8 +246,9 @@ class BallMain extends JPanel implements Runnable {
 			iPoint next = new iPoint(); // 次の始点
 			next = Cast.ToIntFromDbl(equation(circleR, angle * (i + 1)));
 
+			int num = numorder.numOrder[i]; // 入れる数字．
 			/* 一つの三角形の色 */
-			this.setColorAccordeNum(g, i);
+			this.setColorAccordeNum(g, num);
 
 			int poly_x[] = { start.x, next.x, center.x };
 			int poly_y[] = { start.y, next.y, center.y };
@@ -240,7 +260,8 @@ class BallMain extends JPanel implements Runnable {
 			iPoint drawStrNum = new iPoint(); // 文字盤の座標
 			drawStrNum = Cast.ToIntFromDbl(equation(circleR - 20, angle * (i + 1) - angle / 2.0));
 			g.setColor(myColor.WHITE);
-			g.drawString(Integer.toString(i), drawStrNum.x, drawStrNum.y); // 文字盤を書く
+			// g.drawString(Integer.toString(i), drawStrNum.x, drawStrNum.y); // 文字盤を書く
+			g.drawString(Integer.toString(num), drawStrNum.x, drawStrNum.y);
 
 		}
 	}
