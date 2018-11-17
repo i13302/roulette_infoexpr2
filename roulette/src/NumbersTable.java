@@ -2,8 +2,9 @@ import java.util.ArrayList;
 
 public class NumbersTable {
 	public ArrayList<Number> numbers = new ArrayList<Number>();
-	public NumbersTable(){
-		
+
+	public NumbersTable() {
+
 		numbers.add(new Number("0", Number.Range.ZERO, Number.Color.GREEN));
 		numbers.add(new Number("1", Number.Range.SMALL, Number.Color.RED));
 		numbers.add(new Number("2", Number.Range.SMALL, Number.Color.BLACK));
@@ -41,6 +42,6 @@ public class NumbersTable {
 		numbers.add(new Number("34", Number.Range.LARGE, Number.Color.RED));
 		numbers.add(new Number("35", Number.Range.LARGE, Number.Color.BLACK));
 		numbers.add(new Number("36", Number.Range.LARGE, Number.Color.RED));
-		numbers.add(new Number("37", Number.Range.LARGE, Number.Color.GREEN));
+		numbers.add(new Number("00", Number.Range.LARGE, Number.Color.GREEN));
 	}
 }
