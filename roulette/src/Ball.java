@@ -167,13 +167,14 @@ class BallMain extends JPanel implements Runnable {
 
 	/* 数字に対応する色に合わせて，g.setColor()を行う． */
 	private void setColorAccordeNum(Graphics g, int num) {
-		/* とりあえず */
-		if (num == 0 || num == 37) {
-			g.setColor(myColor.GREEN);
-		} else if (num % 2 == 0) {
-			g.setColor(myColor.RED);
-		} else {
+		NumbersTable numbersTable=new NumbersTable();
+		Number.Color getColor = NumbersTable.numbers.get(num).getColor();
+		if(getColor== Number.Color.BLACK) {
 			g.setColor(myColor.BLACK);
+		}else if(getColor== Number.Color.RED) {
+			g.setColor(myColor.RED);
+		}else {
+			g.setColor(myColor.GREEN);
 		}
 	}
 
