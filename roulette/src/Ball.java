@@ -154,8 +154,8 @@ class BallMain extends JPanel implements Runnable {
 	private dPoint equation(double r, double theta /* 角度 */ ) {
 		dPoint point = new dPoint(); // ボールのxy座標
 		point = toXYfromRT(r, theta);
-		point.x = point.x + (int) Math.round((circleR) + 50);
-		point.y = point.y + (int) Math.round((circleR) + 25);
+		point.x = point.x + ((circleR) + 50);
+		point.y = point.y + ((circleR) + 25);
 
 		return point;
 	}
@@ -246,6 +246,7 @@ class BallMain extends JPanel implements Runnable {
 	}
 
 	private void showBanmen(Graphics g) {
+
 		for (int i = 0; i < numNumber; i++) {
 			iPoint start = new iPoint(); // 線の始点座標
 			start = Cast.ToIntFromDbl(equation(circleR, angle * (i)));
