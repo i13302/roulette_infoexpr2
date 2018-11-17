@@ -44,7 +44,7 @@ class NumOrder {
 
 	private void search() {
 		for (int i = 0; i < numNumber; i++) {
-			numSearch[numOrder[i]] = i;
+			numSearch[numOrder[i]] = i; // TODO 高速化
 		}
 	}
 
@@ -106,6 +106,8 @@ class BallMain extends JPanel implements Runnable {
 	private iPoint Size = new iPoint(); // Windowサイズ
 	private NumOrder numorder = new NumOrder(); // 数字の順番
 
+	iPoint center = new iPoint(); // 中心座標
+	
 	private volatile Thread thread = null;
 
 	public BallMain(int sn, int xSize, int ySize) {
@@ -119,6 +121,7 @@ class BallMain extends JPanel implements Runnable {
 	/* Windowの設定 */
 	private void initJPanel(int xSize, int ySize) {
 		this.setPreferredSize(new Dimension(xSize, ySize));
+		center = Cast.ToIntFromDbl(equation(0.0, 0.0));
 	}
 
 	/* スレッドを開始 */
@@ -183,6 +186,7 @@ class BallMain extends JPanel implements Runnable {
 		/* 文字色 */
 		this.setColorAccordeNum(g, this.nowBallValue);
 		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
+		g.drawString(Integer.toString(this.nowBallValue), center.x, center.y);
 
 		g.setColor(myColor.WHITE);
 		g.drawString("●", nowBallPoint.x, nowBallPoint.y); // ボール
@@ -196,7 +200,7 @@ class BallMain extends JPanel implements Runnable {
 		// for (double i = 0.0; i <= this.getT() / 4; i += 0.001) {
 		/* 角度で調整 */
 		for (double i = Math.random(); i < 4 * Math.PI + this.angle * this.stopNum + this.angle / 2.0; i += deltai) {
-			this.nowBallValue = (int) ((this.omega * i) / this.angle % numNumber);
+			this.nowBallValue = numorder.numOrder[(int) ((this.omega * i) / this.angle % numNumber)];
 			dPoint xyBall = new dPoint();
 			xyBall = this.equation(circleR - 30, this.omega * i);
 
@@ -237,9 +241,12 @@ class BallMain extends JPanel implements Runnable {
 
 	private void showBanmen(Graphics g) {
 
-		iPoint center = new iPoint(); // 中心座標
-		center = Cast.ToIntFromDbl(equation(0.0, 0.0));
+		
 
+
+//		Font nomarlFontSize=g.getFont();
+//		Font normalFont=new Font("Dialog",Font.PLAIN,20);
+		
 		for (int i = 0; i < numNumber; i++) {
 			iPoint start = new iPoint(); // 線の始点座標
 			start = Cast.ToIntFromDbl(equation(circleR, angle * (i)));
@@ -254,7 +261,7 @@ class BallMain extends JPanel implements Runnable {
 			int poly_y[] = { start.y, next.y, center.y };
 			g.fillPolygon(poly_x, poly_y, 3);
 
-			g.setColor(myColor.BLACK);
+			g.setColor(myColor.WHITE);
 			g.drawLine(start.x, start.y, center.x, center.y); // 線を引く
 
 			iPoint drawStrNum = new iPoint(); // 文字盤の座標
