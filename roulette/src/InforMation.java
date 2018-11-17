@@ -4,7 +4,7 @@ import java.awt.*;
 public class InforMation {
 	private int playerMoney;
 	private int dealerMoney;
-
+	
 	private String gameInfo = "<html> 1. 賭ける場所と金額を設定します．<br>       制限時間を過ぎてしまうと，賭けられなくなるのでお早めに．<br> 2. 自動でルーレットが始まります．当たるといいね！\n 3. 終了後，支払いが行われます．<br> 4. 1.に戻ります．いっぱい楽しんでね！<br>";
 	JFrame jframe;
 	JLabel jLabel = new JLabel();
@@ -30,7 +30,12 @@ public class InforMation {
 		moneyInfo.append("Dealer");
 		moneyInfo.append(Integer.toString(this.dealerMoney));
 
-		jLabel.setText(gameInfo + moneyInfo + "</html>"); // TODO 処理に時間がかかって追いつかない．
+		StringBuilder showStrBuild =new StringBuilder();
+		showStrBuild.append(gameInfo);
+		showStrBuild.append(moneyInfo);
+		showStrBuild.append("</html>");
+		
+		jLabel.setText(showStrBuild.toString()); // TODO 処理に時間がかかって追いつかない．
 
 		panel = new JPanel();
 		panel.add(jLabel);
