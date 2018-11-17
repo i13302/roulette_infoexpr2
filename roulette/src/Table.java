@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.JFrame;
 import java.awt.event.*;
 
+/* Debug用 いずれ消したい */
 class Util {
 	/**
 	 * 実行中のメソッド名を取得します。
@@ -49,18 +50,18 @@ public class Table extends JFrame implements ActionListener {
 		// setLayout(new FlowLayout()); // レイアウトの設定
 		this.setLayout(null);
 
-		_init_JFrame();
-		_init_status();
+		init_JFrame();
+		init_status();
 
-		_setJBtnNumbers();
-		_setJBtnMoneys();
-		_setJBtnExit();
-		_setJLbl();
+		setJBtnNumbers();
+		setJBtnMoneys();
+		setJBtnExit();
+		setJLbl();
 
 	}
 
 	/* Windowの設定 */
-	private void _init_JFrame() {
+	private void init_JFrame() {
 		this.setTitle("Table");
 		this.setSize(500, 600);
 		this.setResizable(false);
@@ -68,13 +69,13 @@ public class Table extends JFrame implements ActionListener {
 	}
 
 	/* ステータスを初期化 */
-	private void _init_status() {
+	private void init_status() {
 		statusNumber = -1;
 		statusMoney = 0;
 	}
 
 	/* 賭ける場所のボタン */
-	private void _setJBtnNumbers() {
+	private void setJBtnNumbers() {
 		System.out.println(Util.getMethodName());
 
 		int width = 90, height = 25;
@@ -95,7 +96,7 @@ public class Table extends JFrame implements ActionListener {
 	}
 
 	/* 賭けるお金のボタン */
-	private void _setJBtnMoneys() {
+	private void setJBtnMoneys() {
 		System.out.println(Util.getMethodName());
 
 		JBtnMoney[0] = new JButton(labelMoney + ":" + String.valueOf(1));
@@ -122,7 +123,7 @@ public class Table extends JFrame implements ActionListener {
 	}
 
 	/* 強制終了ボタン */
-	private void _setJBtnExit() {
+	private void setJBtnExit() {
 		System.out.println(Util.getMethodName());
 
 		int width = 100, height = 30;
@@ -136,7 +137,7 @@ public class Table extends JFrame implements ActionListener {
 	}
 
 	/* ラベルの設定 */
-	private void _setJLbl() {
+	private void setJLbl() {
 		JLblStatusNumber.setText("no Select");
 		JLblStatusMoney.setText("no Select");
 
