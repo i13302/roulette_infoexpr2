@@ -183,11 +183,17 @@ class BallMain extends JPanel implements Runnable {
 
 		showBanmen(g);
 
+
+		g.setColor(myColor.WHITE);
+		int miniCircleR=100;
+		g.fillOval(center.x-miniCircleR/2,center.y-miniCircleR/2,miniCircleR,miniCircleR);
+
 		/* 文字色 */
 		this.setColorAccordeNum(g, this.nowBallValue);
-		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
-		g.drawString(Integer.toString(this.nowBallValue), center.x, center.y);
-
+		g.setFont(new Font("Arial", Font.PLAIN, 50));
+//		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
+		g.drawString(Integer.toString(this.nowBallValue), center.x-miniCircleR/2+30, center.y+15);
+		
 		g.setColor(myColor.WHITE);
 		g.drawString("●", nowBallPoint.x, nowBallPoint.y); // ボール
 	}
