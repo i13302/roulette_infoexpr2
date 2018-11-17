@@ -18,8 +18,8 @@ class iPoint {
 class Cast {
 	public static iPoint ToIntFromDbl(dPoint d) {
 		iPoint ret = new iPoint();
-		ret.x = (int) d.x;
-		ret.y = (int) d.y;
+		ret.x = (int) (Math.round(d.x));
+		ret.y = (int) (Math.round(d.y));
 		return ret;
 	}
 }
@@ -107,7 +107,7 @@ class BallMain extends JPanel implements Runnable {
 	private NumOrder numorder = new NumOrder(); // 数字の順番
 
 	iPoint center = new iPoint(); // 中心座標
-	
+
 	private volatile Thread thread = null;
 
 	public BallMain(int sn, int xSize, int ySize) {
@@ -154,8 +154,8 @@ class BallMain extends JPanel implements Runnable {
 	private dPoint equation(double r, double theta /* 角度 */ ) {
 		dPoint point = new dPoint(); // ボールのxy座標
 		point = toXYfromRT(r, theta);
-		point.x = point.x + (int) (circleR) + 50;
-		point.y = point.y + (int) (circleR) + 25;
+		point.x = point.x + (int) Math.round((circleR) + 50);
+		point.y = point.y + (int) Math.round((circleR) + 25);
 
 		return point;
 	}
@@ -183,19 +183,19 @@ class BallMain extends JPanel implements Runnable {
 
 		showBanmen(g);
 
-
 		g.setColor(myColor.WHITE);
-		int miniCircleR=100;
-		g.fillOval(center.x-miniCircleR/2,center.y-miniCircleR/2,miniCircleR,miniCircleR);
+		int miniCircleR = 100;
+		g.fillOval(center.x - miniCircleR / 2, center.y - miniCircleR / 2, miniCircleR, miniCircleR);
 
 		/* 文字色 */
 		this.setColorAccordeNum(g, this.nowBallValue);
 		g.setFont(new Font("Arial", Font.PLAIN, 50));
 //		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
-		g.drawString(Integer.toString(this.nowBallValue), center.x-miniCircleR/2+30, center.y+15);
-		
+		g.drawString(Integer.toString(this.nowBallValue), center.x - miniCircleR / 2 + 30, center.y + 15);
+
 		g.setColor(myColor.WHITE);
-		g.drawString("●", nowBallPoint.x, nowBallPoint.y); // ボール
+//		g.drawString("●", nowBallPoint.x, nowBallPoint.y); // ボール
+		g.fillOval(nowBallPoint.x, nowBallPoint.y, 10, 10);
 	}
 
 	/* ボールのアニメーション */
@@ -206,9 +206,9 @@ class BallMain extends JPanel implements Runnable {
 		// for (double i = 0.0; i <= this.getT() / 4; i += 0.001) {
 		/* 角度で調整 */
 		for (double i = Math.random(); i < 4 * Math.PI + this.angle * this.stopNum + this.angle / 2.0; i += deltai) {
-			this.nowBallValue = numorder.numOrder[(int) ((this.omega * i) / this.angle % numNumber)];
+			this.nowBallValue = numorder.numOrder[(int) (((this.omega * i) / this.angle % numNumber))];
 			dPoint xyBall = new dPoint();
-			xyBall = this.equation(circleR - 30, this.omega * i);
+			xyBall = this.equation(circleR - 50, this.omega * i);
 
 			nowBallPoint = Cast.ToIntFromDbl(xyBall); // ボールの座標
 
@@ -246,13 +246,6 @@ class BallMain extends JPanel implements Runnable {
 	}
 
 	private void showBanmen(Graphics g) {
-
-		
-
-
-//		Font nomarlFontSize=g.getFont();
-//		Font normalFont=new Font("Dialog",Font.PLAIN,20);
-		
 		for (int i = 0; i < numNumber; i++) {
 			iPoint start = new iPoint(); // 線の始点座標
 			start = Cast.ToIntFromDbl(equation(circleR, angle * (i)));
