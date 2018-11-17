@@ -1,10 +1,16 @@
 
 public class Number {
 	private String _strnum;
-	public static enum final Range { SMALL, MEDIUM, LARGE };
+	public static enum final Range { ZERO, SMALL, MEDIUM, LARGE };
 	private Range _range;
 	public static enum final Color { BLACK, RED, GREEN };
 	private Color _color;
+	
+	public Number(String strNum, Range range, Color color){
+		this._strnum = strNum;
+		this._range = range;
+		this._color = color;
+	}
 
 	public String getStrNum() {
 		return this._strnum;
