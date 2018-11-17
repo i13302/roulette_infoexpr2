@@ -1,9 +1,9 @@
 
 public class Number {
 	private String _strnum;
-	public static enum final Range { ZERO, SMALL, MEDIUM, LARGE };
+	public static enum Range { ZERO, SMALL, MEDIUM, LARGE };
 	private Range _range;
-	public static enum final Color { BLACK, RED, GREEN };
+	public static enum Color { BLACK, RED, GREEN };
 	private Color _color;
 	
 	public Number(String strNum, Range range, Color color){
