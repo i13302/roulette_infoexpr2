@@ -30,8 +30,13 @@ public class Progress {
 			Ball ball = new Ball(stopAddress);
 			// Payment.calc(player, stopAddress);
 			// Payment.calc(dealer, stopAddress);
-		}
 
+			player.getCoin();
+			dealer.getCoin();
+
+			System.out.println(player.getCoin());
+			System.out.println(dealer.getCoin());
+		}
 		// 7. 終了
 		System.out.println("END");
 		System.exit(0);
