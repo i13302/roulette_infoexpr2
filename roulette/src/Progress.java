@@ -23,7 +23,7 @@ public class Progress {
 				Thread.sleep(5 * 1000);
 			} catch (InterruptedException e) {
 			}
-
+			table.setVisible(false); // Windowを閉じる
 			Roulette roulette = new Roulette();
 
 			int stopAddress = roulette.getIntRouletteValue();
@@ -31,8 +31,7 @@ public class Progress {
 			new Ball(stopAddress);
 
 			// 掛けた場所への判定と、支払い処理
-			// Payment.calc(player, stopAddress);
-			// Payment.calc(dealer, stopAddress);
+			Payment.calc(player, dealer, stopAddress);
 
 			player.setAddress(table.getNumber());
 			System.out.println(player.getAddress());
