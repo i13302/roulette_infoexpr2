@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class NumbersTable {
-	public ArrayList<Number> numbers = new ArrayList<Number>();
+	public static ArrayList<Number> numbers = new ArrayList<Number>();
 
 	public NumbersTable() {
 
