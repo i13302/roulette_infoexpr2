@@ -1,3 +1,10 @@
+
+/*
+ *
+ * BetするためのTableを作成する．
+ * 
+ */
+
 import javax.swing.*;
 import javax.swing.JFrame;
 import java.awt.event.*;
@@ -15,33 +22,28 @@ class Util {
 }
 
 public class Table extends JFrame implements ActionListener {
-	private JFrame jframe; // JFrame関係
-
 	private NumbersTable numbersTable = new NumbersTable(); // 数字を参照する
-	private int numNumber = numbersTable.numbers.size(); // 賭ける場所の個数 // TODO Numberクラス
-	private int numMoney = 4; // 賭けるお金のパターン
 
-	private JButton[] JBtnNumber = new JButton[numNumber]; // 場所のボタン
+	private JButton[] JBtnNumber = new JButton[numbersTable.numbers.size()]; // 場所のボタン
 	private String[] btnNumSPPattern = { "SMALL", "MIDDLE", "LARGE", "LOW", "HIGH", "PARILLINEN", "PARITON", "RED",
 			"BALCK" }; // 特殊な場所
 	private JButton[] JBtnNumSP = new JButton[btnNumSPPattern.length]; // SMALL，MIDDLE...のボタン
 
-	private JButton[] JBtnMoney = new JButton[numMoney]; // お金のボタン
 	private int[] btnMoneyPattern = { 1, 5, 15, 50 }; // 賭けるパターン
+	private JButton[] JBtnMoney = new JButton[btnMoneyPattern.length]; // お金のボタン
 
-	private JButton JBtnMoneyClear = new JButton("Clear"); // 選択したお金を0に戻す．
+	private int statusNumber; // 選択した場所
+	private JLabel JLblStatusNumber = new JLabel(); // 選択した場所を表示
+	private int statusMoney; // 選択したお金
+	private JLabel JLblStatusMoney = new JLabel(); // 選択したお金を表示
+
+	private boolean statusLock = false; // 選択をロック true...Locked,False...Open
 
 	private int setBtnNumberYLine; // y軸のどこまでボタンが設置されているのか場所
 	private int setBtnMoneyYLine; // 同賭金
 
+	private JButton JBtnMoneyClear = new JButton("Clear"); // 選択したお金を0に戻す
 	private JButton JBtnExit = new JButton("Exit"); // 強制終了
-
-	private int statusNumber; // 選択した場所
-	private JLabel JLblStatusNumber = new JLabel(); // 選択した場所を表示
-	private int statusMoney = 0; // 選択したお金
-	private JLabel JLblStatusMoney = new JLabel(); // 選択したお金を表示
-
-	private boolean statusLock = false; // 選択をロック true...Locked,False...Open
 
 	/* Constructer */
 	public Table() {
@@ -86,10 +88,10 @@ public class Table extends JFrame implements ActionListener {
 
 		int btn_x = 200;
 		int width = 90, height = 25;
-		for (int i = 0, x = btn_x, y = 10; i < numNumber; i++, x += (width + 10)) {
+		for (int i = 0, x = btn_x, y = 10; i < numbersTable.numbers.size(); i++, x += (width + 10)) {
 			// JBtnNumber[i] = new JButton(labelNumber + ":" + String.valueOf(i + 1));
 			// TODO 画像で置き換える
-			JBtnNumber[i] = new JButton(numbersTable.numbers.get((i + 1) % numNumber).getStrNum());
+			JBtnNumber[i] = new JButton(numbersTable.numbers.get((i + 1) % numbersTable.numbers.size()).getStrNum());
 			JBtnNumber[i].addActionListener(this);
 			JBtnNumber[i].setBounds(x, y, width, height);
 			add(JBtnNumber[i]);
@@ -128,13 +130,13 @@ public class Table extends JFrame implements ActionListener {
 	private void setJBtnMoneys() {
 		System.out.println(Util.getMethodName());
 
-		for (int i = 0; i < numMoney; i++) {
+		for (int i = 0; i < btnMoneyPattern.length; i++) {
 			JBtnMoney[i] = new JButton(String.valueOf(btnMoneyPattern[i]));
 		}
 
 		int width = 90, height = 25;
 		int x = 20, y = 10;
-		for (int i = 0; i < numMoney; i++, y += (height + 10)) {
+		for (int i = 0; i < btnMoneyPattern.length; i++, y += (height + 10)) {
 			JBtnMoney[i].addActionListener(this);
 			JBtnMoney[i].setBounds(x, y + 10, width, height);
 
@@ -203,7 +205,7 @@ public class Table extends JFrame implements ActionListener {
 			return;
 		}
 
-		for (int i = 0; i < numNumber; i++) { // 賭けるNumberを設定する
+		for (int i = 0; i < numbersTable.numbers.size(); i++) { // 賭けるNumberを設定する
 			if (e.getSource() == JBtnNumber[i]) {
 				statusNumber = i;
 				JLblStatusNumber.setText("Select Num is " + Integer.toString(statusNumber));
@@ -213,14 +215,14 @@ public class Table extends JFrame implements ActionListener {
 
 		for (int i = 0; i < btnNumSPPattern.length; i++) { // 賭ける特殊な場所を設定する
 			if (e.getSource() == JBtnNumSP[i]) {
-				statusNumber = numNumber + i;
+				statusNumber = numbersTable.numbers.size() + i;
 				System.out.println(Integer.toString(statusNumber));
 				JLblStatusNumber.setText("Select Num is " + btnNumSPPattern[i]);
 				return;
 			}
 		}
 
-		for (int i = 0; i < numMoney; i++) {
+		for (int i = 0; i < btnMoneyPattern.length; i++) {
 			if (e.getSource() == JBtnMoney[i]) { // 賭けるお金を足す
 				statusMoney += btnMoneyPattern[i];
 				JLblStatusMoney.setText("Select Money is " + Integer.toString(statusMoney));
