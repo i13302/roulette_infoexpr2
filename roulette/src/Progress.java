@@ -1,5 +1,4 @@
 public class Progress {
-
 	// この辺の値は要調整
 	private static final int playerCache = 100000;
 	private static final int dealerCache = 100000;
@@ -7,6 +6,9 @@ public class Progress {
 	public static void main(String args[]) {
 		Player player = new Player(new Wallet(playerCache));
 		Dealer dealer = new Dealer(new Wallet(dealerCache));
+		InforMation info = new InforMation(player, dealer);
+
+		info.setMoney(player, dealer);
 
 		while (!(player.getWallet().isInsolvency() && dealer.getWallet().isInsolvency())) {
 			Table table = new Table();
@@ -39,9 +41,7 @@ public class Progress {
 			// 掛けた場所への判定と、支払い処理
 			Payment.calc(player, dealer, stopAddress);
 
-			// お互いの残金
-			System.out.println(player.getWallet().getCache());
-			System.out.println(dealer.getWallet().getCache());
+			info.setMoney(player, dealer);
 		}
 		// 7. 終了
 		System.out.println("END");
