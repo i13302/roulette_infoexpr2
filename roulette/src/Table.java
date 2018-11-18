@@ -22,6 +22,10 @@ public class Table extends JFrame implements ActionListener {
 	private int numMoney = 4; // 賭けるお金のパターン
 
 	private JButton[] JBtnNumber = new JButton[numNumber]; // 場所のボタン
+	private String[] btnNumSPPattern = { "SMALL", "MIDDLE", "LARGE", "LOW", "HIGH", "PARILLINEN", "PARITON", "RED",
+			"BALCK" }; // 特殊な場所
+	private JButton[] JBtnNumSP = new JButton[btnNumSPPattern.length]; // SMALL，MIDDLE...のボタン
+
 	private JButton[] JBtnMoney = new JButton[numMoney]; // お金のボタン
 	private int[] btnMoneyPattern = { 1, 5, 15, 50 }; // 賭けるパターン
 
@@ -80,8 +84,9 @@ public class Table extends JFrame implements ActionListener {
 	private void setJBtnNumbers() {
 		System.out.println(Util.getMethodName());
 
+		int btn_x = 200;
 		int width = 90, height = 25;
-		for (int i = 0, x = 200, y = 10; i < numNumber; i++, x += (width + 10)) {
+		for (int i = 0, x = btn_x, y = 10; i < numNumber; i++, x += (width + 10)) {
 			// JBtnNumber[i] = new JButton(labelNumber + ":" + String.valueOf(i + 1));
 			// TODO 画像で置き換える
 			JBtnNumber[i] = new JButton(numbersTable.numbers.get((i + 1) % numNumber).getStrNum());
@@ -89,12 +94,32 @@ public class Table extends JFrame implements ActionListener {
 			JBtnNumber[i].setBounds(x, y, width, height);
 			add(JBtnNumber[i]);
 			if ((i + 1) % 3 == 0) {
-				x = 200 - (width + 10); // x座標をリセット
-
+				x = btn_x - (width + 10); // x座標をリセット
 				y += (height + 5); // y座標を更新
 			}
 			setBtnNumberYLine = y + height; // 現在，どこまでボタンが置いているのか保存ボタン
 
+		}
+
+		setBtnNumberYLine += 20;
+
+		for (int i = 0, x = btn_x, y = setBtnNumberYLine; i < btnNumSPPattern.length; i++, x += (width + 10)) {
+			JBtnNumSP[i] = new JButton(btnNumSPPattern[i]);
+			JBtnNumSP[i].addActionListener(this);
+			if (i == 3) {
+				width += 50;
+			}
+			if (i < 3) {
+				JBtnNumSP[i].setBounds(x, y, width, height);
+			} else {
+				JBtnNumSP[i].setBounds(x, y, width, height);
+			}
+			add(JBtnNumSP[i]);
+			if ((i < 3 && (i + 1) % 3 == 0) || (i >= 3 && (i) % 2 == 0)) {
+				x = btn_x - (width + 10); // x座標をリセット
+				y += (height + 5); // y座標を更新
+			}
+			setBtnNumberYLine = y + height; // 現在，どこまでボタンが置いているのか保存ボタンS
 		}
 
 	}
@@ -182,6 +207,15 @@ public class Table extends JFrame implements ActionListener {
 			if (e.getSource() == JBtnNumber[i]) {
 				statusNumber = i;
 				JLblStatusNumber.setText("Select Num is " + Integer.toString(statusNumber));
+				return;
+			}
+		}
+
+		for (int i = 0; i < btnNumSPPattern.length; i++) { // 賭ける特殊な場所を設定する
+			if (e.getSource() == JBtnNumSP[i]) {
+				statusNumber = numNumber + i;
+				System.out.println(Integer.toString(statusNumber));
+				JLblStatusNumber.setText("Select Num is " + btnNumSPPattern[i]);
 				return;
 			}
 		}
