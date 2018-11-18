@@ -6,10 +6,10 @@ public class Progress {
 	public static void main(String args[]) {
 		Player player = new Player(new Wallet(playerCache));
 		Dealer dealer = new Dealer(new Wallet(dealerCache));
-		InforMation info = new InforMation();
+		InforMation info = new InforMation(player, dealer);
 
-    info.setMoney(player.getWallet().getCache(), dealer.getWallet().getCache());
-    
+		info.setMoney(player, dealer);
+
 		while (!(player.getWallet().isInsolvency() && dealer.getWallet().isInsolvency())) {
 			Table table = new Table();
 			table.setVisible(true); // Windowを開く
@@ -41,7 +41,7 @@ public class Progress {
 			// 掛けた場所への判定と、支払い処理
 			Payment.calc(player, dealer, stopAddress);
 
-      info.setMoney(player.getWallet().getCache(), dealer.getWallet().getCache());
+			info.setMoney(player, dealer);
 		}
 		// 7. 終了
 		System.out.println("END");
