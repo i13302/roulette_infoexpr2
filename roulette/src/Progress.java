@@ -23,15 +23,26 @@ public class Progress {
 				Thread.sleep(5 * 1000);
 			} catch (InterruptedException e) {
 			}
+			table.setVisible(false); // Windowを閉じる
 
+			player.setAddress(table.getNumber());
+			System.out.println(player.getAddress());
+			player.setCoin(table.getMoney());
+			System.out.println(player.getCoin());
 			Roulette roulette = new Roulette();
 
+			// Rouletteの停止位置の決定
 			int stopAddress = roulette.getIntRouletteValue();
-			Ball ball = new Ball(stopAddress);
-			// Payment.calc(player, stopAddress);
-			// Payment.calc(dealer, stopAddress);
-		}
+			// Rouletteの回転開始
+			new Ball(stopAddress);
 
+			// 掛けた場所への判定と、支払い処理
+			Payment.calc(player, dealer, stopAddress);
+
+			// お互いの残金
+			System.out.println(player.getWallet().getCache());
+			System.out.println(dealer.getWallet().getCache());
+		}
 		// 7. 終了
 		System.out.println("END");
 		System.exit(0);
