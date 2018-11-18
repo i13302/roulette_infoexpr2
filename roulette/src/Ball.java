@@ -109,6 +109,8 @@ class BallMain extends JPanel implements Runnable {
 	iPoint center = new iPoint(); // 中心座標
 
 	private volatile Thread thread = null;
+	
+	private NumbersTable numbersTable=new NumbersTable();
 
 	public BallMain(int sn, int xSize, int ySize) {
 		this.stopNum = numorder.numSearch[sn];
@@ -167,7 +169,6 @@ class BallMain extends JPanel implements Runnable {
 
 	/* 数字に対応する色に合わせて，g.setColor()を行う． */
 	private void setColorAccordeNum(Graphics g, int num) {
-		NumbersTable numbersTable=new NumbersTable();
 		Number.Color getColor = NumbersTable.numbers.get(num).getColor();
 		if(getColor== Number.Color.BLACK) {
 			g.setColor(myColor.BLACK);
@@ -192,7 +193,7 @@ class BallMain extends JPanel implements Runnable {
 		this.setColorAccordeNum(g, this.nowBallValue);
 		g.setFont(new Font("Arial", Font.PLAIN, 50));
 //		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
-		g.drawString(Integer.toString(this.nowBallValue), center.x - miniCircleR / 2 + 30, center.y + 15);
+		g.drawString(NumbersTable.numbers.get(this.nowBallValue).getStrNum(), center.x - miniCircleR / 2 + 30, center.y + 15);
 
 		g.setColor(myColor.WHITE);
 //		g.drawString("●", nowBallPoint.x, nowBallPoint.y); // ボール
@@ -238,6 +239,7 @@ class BallMain extends JPanel implements Runnable {
 
 			if (i >= 2 * Math.PI) {
 				deltai = 0.003;
+				continue;
 			}
 
 		}
@@ -269,7 +271,9 @@ class BallMain extends JPanel implements Runnable {
 			drawStrNum = Cast.ToIntFromDbl(equation(circleR - 20, angle * (i + 1) - angle / 2.0));
 			g.setColor(myColor.WHITE);
 			// g.drawString(Integer.toString(i), drawStrNum.x, drawStrNum.y); // 文字盤を書く
-			g.drawString(Integer.toString(num), drawStrNum.x, drawStrNum.y);
+			
+			// g.drawString(Integer.toString(num), drawStrNum.x, drawStrNum.y);
+			g.drawString(NumbersTable.numbers.get(num).getStrNum(),drawStrNum.x,drawStrNum.y);
 
 		}
 	}
