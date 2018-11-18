@@ -33,4 +33,13 @@ public class Player {
 	public int getAddress() {
 		return this.address;
 	}
+
+	public boolean sendCache(Player payee, int cache) {
+		if (cache < this.wallet.getCache()) {
+			this.wallet.payCache(cache);
+			payee.wallet.payCache(-cache);
+			return true;
+		}
+		return false;
+	}
 }

@@ -1,5 +1,5 @@
 public class Wallet {
-	private int cache;	// 所持金
+	private int cache; // 所持金
 
 	public Wallet(int _cache) {
 		this.cache = _cache;
