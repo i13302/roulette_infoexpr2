@@ -27,15 +27,21 @@ public class Progress {
 			Roulette roulette = new Roulette();
 
 			int stopAddress = roulette.getIntRouletteValue();
-			Ball ball = new Ball(stopAddress);
+			// Rouletteの回転開始
+			new Ball(stopAddress);
+
+			// 掛けた場所への判定と、支払い処理
 			// Payment.calc(player, stopAddress);
 			// Payment.calc(dealer, stopAddress);
 
-			player.getCoin();
-			dealer.getCoin();
-
+			player.setAddress(table.getNumber());
+			System.out.println(player.getAddress());
+			player.setCoin(table.getMoney());
 			System.out.println(player.getCoin());
-			System.out.println(dealer.getCoin());
+
+			// お互いの残金
+			System.out.println(player.getWallet().getCache());
+			System.out.println(dealer.getWallet().getCache());
 		}
 		// 7. 終了
 		System.out.println("END");
