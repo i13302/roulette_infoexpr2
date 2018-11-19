@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import java.awt.event.*;
 import javax.imageio.ImageIO;
 import java.net.URL;
+import java.awt.Color;
 
 /* Debug用 いずれ消したい */
 class Util {
@@ -66,7 +67,6 @@ public class Table extends JFrame implements ActionListener {
 		this.initJFrame();
 		this.initStatus();
 
-		this.setImageIcon();
 		this.setJBtnNumbers();
 		this.setJBtnMoneys();
 		this.setJBtnExit();
@@ -94,31 +94,22 @@ public class Table extends JFrame implements ActionListener {
 	/* ステータスを初期化 */
 	private void initStatus() {
 		statusNumMoney = this.makeAnyNumMoneyArray(statusMax);
-		statusNumMoney[0].num = 0;
-		System.out.println(statusNumMoney[0].num + " , " + AnyNumMoney.numNext);
+		AnyNumMoney.reset();
+		// statusNumMoney[0].num = 0;
+		// System.out.println(statusNumMoney[0].num + " , " + AnyNumMoney.numNext);
 	}
 
-	/* 画像の設定 */
-	private void setImageIcon() {
-		System.out.println(Util.getMethodName());
-		int i = 0;
-		for (; i < NumbersTable.numbers.size(); i++) {
-			String ImgFile = getClass().getResource(".") + "../ButtonIMG/rouletteNum"+Integer.toString(i)+".png";
-			System.out.println(ImgFile);
-			JBtnNumberIcon[i] = new ImageIcon(ImgFile);
+	/* 数字に対応する色を返す */
+	private Color setColor(int x) {
+		Number.Color getC = NumbersTable.numbers.get(x).getColor();
+		if (getC == Number.Color.BLACK) {
+			return MyColor.BLACK;
+		} else if (getC == Number.Color.RED) {
+			return MyColor.RED;
+		} else if (getC == Number.Color.GREEN) {
+			return MyColor.GREEN;
 		}
-		// for (; i < NumbersTable.SpecialNumbers.values().length; i++) {
-		// JBtnNumSPIcon[i] = new ImageIcon("./ButtonIMG/roulette" +
-		// btnNumSPPattern[i]);
-		// }
-	}
-	
-	private Color setColor(int x){
-		
-	}
-	
-	private Color setColor(String s){
-		
+		return MyColor.WHITE;
 	}
 
 	/* 賭ける場所のボタン */
@@ -130,7 +121,7 @@ public class Table extends JFrame implements ActionListener {
 		for (int i = 0, x = btn_x, y = 10, most_y = 0; i < NumbersTable.numbers.size(); i++, x += (width + 10)) {
 			// TODO 画像で置き換える
 			JBtnNumber[i] = new JButton(NumbersTable.numbers.get((i) % NumbersTable.numbers.size()).getStrNum());
-			// JBtnNumber[i] = new JButton();
+			JBtnNumber[i].setForeground(setColor(i));
 			JBtnNumber[i].addActionListener(this);
 			JBtnNumber[i].setBounds(x, y, width, height);
 			add(JBtnNumber[i]);
@@ -247,6 +238,10 @@ public class Table extends JFrame implements ActionListener {
 	/* 正規化を行う */
 	private void anyNumMoneyNormalize() {
 		int start = Math.min(AnyNumMoney.numNext, AnyNumMoney.moneyNext) - 1; // 最低限必ずここまでは行っているため
+		if (start == -1) { // 1つも賭けていない
+			retNumMoney = makeAnyNumMoneyArray(1);
+			return;
+		}
 		int size = start; // 次につくる配列のサイズを計測
 		for (int i = start; (statusNumMoney[i].num != AnyNumMoney.init)
 				&& (statusNumMoney[i].money != AnyNumMoney.init); i++, size++) {
@@ -341,6 +336,7 @@ public class Table extends JFrame implements ActionListener {
 	/* 現在の賭けている場所と金額 */
 	public AnyNumMoney[] getNumMoney() {
 		this.anyNumMoneyNormalize();
+		this.initStatus();
 		return retNumMoney;
 	}
 

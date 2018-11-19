@@ -41,6 +41,7 @@ public class Progress {
 			}
 
 			Roulette roulette = new Roulette();
+			System.out.println("Roulette: "+roulette.getIntRouletteValue());
 
 			// Rouletteの停止位置の決定
 			int stopAddress = roulette.getIntRouletteValue();
