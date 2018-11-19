@@ -2,6 +2,7 @@
 https://hackmd.io/by2d2QIlQbyduNz53AxSeQ
 
 ## JavaのVersion
+Java >= 9
 
 ## 使用ライブラリ
 1. Abstract Window Toolkit
