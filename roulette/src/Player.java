@@ -5,6 +5,7 @@ public class Player {
 	private int coin; // 掛け金
 	private int address; // かけた場所
 
+
 	public Player(Wallet _wallet) {
 		this.wallet = _wallet;
 	}
@@ -32,5 +33,14 @@ public class Player {
 
 	public int getAddress() {
 		return this.address;
+	}
+
+	public boolean sendCache(Player payee, int cache) {
+		if (cache < this.wallet.getCache()) {
+			this.wallet.payCache(cache);
+			payee.wallet.payCache(-cache);
+			return true;
+		}
+		return false;
 	}
 }
