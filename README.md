@@ -17,3 +17,4 @@ https://hackmd.io/by2d2QIlQbyduNz53AxSeQ
 1. ByteArrayInputStream (Java Platform SE 8 ),https://docs.oracle.com/javase/jp/8/docs/api/java/io/ByteArrayInputStream.html,2018/11/19
 1. ClassLoader (Java Platform SE 8 ),https://docs.oracle.com/javase/jp/8/docs/api/java/lang/ClassLoader.html,2018/11/19
 1. Class (Java Platform SE 8 ),https://docs.oracle.com/javase/jp/8/docs/api/java/lang/Class.html#getResource-java.lang.String-,2018/11/19
+1. JUnit 5 User Guide,https://junit.org/junit5/docs/current/user-guide/,2018/11/19
