@@ -206,7 +206,6 @@ class BallMain extends JPanel implements Runnable {
 		/* 文字色 */
 		this.setColorAccordeNum(g, this.nowBallValue);
 		g.setFont(new Font("Arial", Font.PLAIN, 50));
-
 		g.drawString(NumbersTable.numbers.get(this.nowBallValue).getStrNum(), center.x - miniCircleR / 2 + 30,
 				center.y + 15); // 現在ボールが居る場所を表示する
 
@@ -284,8 +283,8 @@ class BallMain extends JPanel implements Runnable {
 			iPoint drawStrNum = new iPoint(); // 文字盤の座標
 			drawStrNum = Cast.ToIntFromDbl(equation(circleR - 20, angle * (i + 1) - angle / 2.0));
 			g.setColor(myColor.WHITE);
-
 			g.drawString(NumbersTable.numbers.get(num).getStrNum(), drawStrNum.x, drawStrNum.y); // 文字盤を書く
+
 
 		}
 	}
