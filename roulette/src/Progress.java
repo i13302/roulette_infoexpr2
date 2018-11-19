@@ -30,10 +30,16 @@ public class Progress {
 			}
 			table.setVisible(false); // Windowを閉じる
 
-			player.setAddress(table.getNumber());
-			System.out.println(player.getAddress());
-			player.setCoin(table.getMoney());
-			System.out.println(player.getCoin());
+			// player.setAddress(table.getNumber()); // 変更
+			// System.out.println(player.getAddress());
+			// player.setCoin(table.getMoney()); // 変更
+			// System.out.println(player.getCoin());
+
+			AnyNumMoney[] ret = table.getNumMoney(); // 賭けているデータを取得
+			for (int i = 0; i < ret.length; i++) {
+				System.out.println(ret[i].num + "," + ret[i].money); // 表示しているだけ
+			}
+
 			Roulette roulette = new Roulette();
 
 			// Rouletteの停止位置の決定

@@ -42,7 +42,7 @@ public class NumbersTable {
 			add(new Number("35", Number.Range.LARGE, Number.Color.BLACK));
 			add(new Number("36", Number.Range.LARGE, Number.Color.RED));
 			add(new Number("00", Number.Range.ZERO, Number.Color.GREEN));
-		}
+		} // 38個
 	};
 
 	public enum SpecialNumbers {
