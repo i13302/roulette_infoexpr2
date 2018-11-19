@@ -13,7 +13,7 @@ public class Progress {
 		while (!(player.getWallet().isInsolvency() && dealer.getWallet().isInsolvency())) {
 			Table table = new Table();
 			table.setVisible(true); // Windowを開く
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < 10; i++) {
 				try { // 制限時間まで待っている
 					Thread.sleep(1 * 1000);
 				} catch (InterruptedException e) {
@@ -39,6 +39,7 @@ public class Progress {
 			for (int i = 0; i < ret.length; i++) {
 				System.out.println(ret[i].num + "," + ret[i].money); // 表示しているだけ
 			}
+			player.setAnyNumsMoney(ret);
 
 			Roulette roulette = new Roulette();
 
@@ -48,7 +49,8 @@ public class Progress {
 			new Ball(stopAddress);
 
 			// 掛けた場所への判定と、支払い処理
-			Payment.calc(player, dealer, stopAddress);
+			Payment.calcEach(player, dealer, stopAddress);
+			// Payment.calc(player, dealer, stopAddress);
 
 			info.setMoney(player, dealer, 0);
 		}

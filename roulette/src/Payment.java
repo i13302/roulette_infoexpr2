@@ -1,19 +1,25 @@
 public class Payment {
 	// private static final NumbersTable numTable = new NumbersTable();
 
-	public static void calc(Player player, Player dealer, int stopAddress) {
-		int playerAddress = player.getAddress();
+	public static void calcEach(Player player, Player dealer, int stopAddress) {
+		for (AnyNumMoney anm : player.getAnyNumsMoney()) {
+			calc(player, dealer, stopAddress, anm);
+		}
+	}
+
+	public static void calc(Player player, Player dealer, int stopAddress, AnyNumMoney anm) {
+		int playerAddress = anm.num;
 		Number winNumber = getNumberByAddress(stopAddress);
 		// インサイドベットの判定
 		if (playerAddress < 0) {
 			return;
 		}
 		if (playerAddress >= 0 && playerAddress <= 37) {
-			if (isWinning36(player, stopAddress)) {
-				dealer.sendCache(player, player.getCoin() * 36);
+			if (isWinning36(anm, stopAddress)) {
+				dealer.sendCache(player, anm.money * 36);
 				return;
 			}
-			player.sendCache(dealer, player.getCoin());
+			player.sendCache(dealer, anm.money);
 			return;
 		}
 		System.out.println("playerAddress: " + playerAddress);
@@ -30,21 +36,21 @@ public class Payment {
 				System.out.println("Result: SMALL");
 				System.out.println("Result: MIDDLE");
 				System.out.println("Result: LARGE");
-				dealer.sendCache(player, player.getCoin() * 3);
+				dealer.sendCache(player, anm.money * 3);
 				return;
 			}
 			break;
 		case LOW:
 			if (isLow(stopAddress)) {
 				System.out.println("Result: LOW");
-				dealer.sendCache(player, player.getCoin() * 2);
+				dealer.sendCache(player, anm.money * 2);
 				return;
 			}
 			break;
 		case HIGH:
 			if (isHigh(stopAddress)) {
 				System.out.println("Result: LOW");
-				dealer.sendCache(player, player.getCoin() * 2);
+				dealer.sendCache(player, anm.money * 2);
 				return;
 			}
 			break;
@@ -52,14 +58,14 @@ public class Payment {
 		case PARILLINEN:
 			if (isEven(stopAddress)) {
 				System.out.println("Result: PARILLINEN");
-				dealer.sendCache(player, player.getCoin() * 2);
+				dealer.sendCache(player, anm.money * 2);
 				return;
 			}
 			break;
 		case PARITON:
 			if (!isEven(stopAddress)) {
 				System.out.println("Result: PARITON");
-				dealer.sendCache(player, player.getCoin() * 2);
+				dealer.sendCache(player, anm.money * 2);
 				return;
 			}
 			break;
@@ -69,16 +75,16 @@ public class Payment {
 			Number.Color playerColor = getColorByAddress(playerAddress);
 			if (playerColor == winNumber.getColor()) {
 				System.out.println("Result: BLACK or RED");
-				dealer.sendCache(player, player.getCoin() * 2);
+				dealer.sendCache(player, anm.money * 2);
 				return;
 			}
 			break;
 		}
-		player.sendCache(dealer, player.getCoin());
+		player.sendCache(dealer, anm.money);
 	}
 
-	private static boolean isWinning36(Player player, int stopAddress) {
-		if (player.getAddress() == stopAddress) {
+	private static boolean isWinning36(AnyNumMoney anm, int stopAddress) {
+		if (anm.num == stopAddress) {
 			return true;
 		} else {
 			return false;

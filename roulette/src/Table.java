@@ -217,7 +217,8 @@ public class Table extends JFrame implements ActionListener {
 	/* 正規化を行う */
 	private void anyNumMoneyNormalize() {
 		int size = 0; // 次につくる配列のサイズを計測
-		int start = Math.min(AnyNumMoney.numNext, AnyNumMoney.moneyNext); // 最低限必ずここまでは行っているため
+		// int start = Math.min(AnyNumMoney.numNext, AnyNumMoney.moneyNext); // 最低限必ずここまでは行っているため
+		int start = Math.min(AnyNumMoney.numNext, AnyNumMoney.moneyNext) -1 ;
 		for (int i = start; (statusNumMoney[i].num != AnyNumMoney.init)
 				&& (statusNumMoney[i].money != AnyNumMoney.init); i++, size++) {
 			; // 配列のどこまで，有効な値(初期値と異なる)のか計測する
