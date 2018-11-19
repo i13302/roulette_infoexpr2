@@ -32,15 +32,19 @@ public class Table extends JFrame implements ActionListener {
 	private int[] btnMoneyPattern = { 1, 5, 15, 50 }; // 賭けるパターン
 	private JButton[] JBtnMoney = new JButton[btnMoneyPattern.length]; // お金のボタン
 
-	private int statusNumber; // 選択した場所
+	// private int statusNumber; // 選択した場所
 	private JLabel JLblStatusNumber = new JLabel(); // 選択した場所を表示
-	private int statusMoney; // 選択したお金
+	// private int statusMoney; // 選択したお金
 	private JLabel JLblStatusMoney = new JLabel(); // 選択したお金を表示
+
+	// private int statusInit = -1; // 初期値
+	private int statusMax = 5; // 賭けれる個数
+	private AnyNumMoney[] statusNumMoney; // 選択した場所とお金．多点賭け対応．
 
 	private boolean statusLock = false; // 選択をロック true...Locked,False...Open
 
-	private int setBtnNumberYLine=0; // y軸のどこまでボタンが設置されているのか場所
-	private int setBtnMoneyYLine=0; // 同賭金
+	private int setBtnNumberYLine = 0; // y軸のどこまでボタンが設置されているのか場所
+	private int setBtnMoneyYLine = 0; // 同賭金
 
 	private JButton JBtnMoneyClear = new JButton("Clear"); // 選択したお金を0に戻す
 	private JButton JBtnExit = new JButton("Exit"); // 強制終了
@@ -58,8 +62,8 @@ public class Table extends JFrame implements ActionListener {
 		// setLayout(new FlowLayout()); // レイアウトの設定
 		this.setLayout(null);
 
-		init_JFrame();
-		init_status();
+		initJFrame();
+		initStatus();
 
 		setJBtnNumbers();
 		setJBtnMoneys();
@@ -69,7 +73,7 @@ public class Table extends JFrame implements ActionListener {
 	}
 
 	/* Windowの設定 */
-	private void init_JFrame() {
+	private void initJFrame() {
 		this.setTitle("Table");
 		this.setSize(500, 600);
 		this.setResizable(false);
@@ -77,15 +81,19 @@ public class Table extends JFrame implements ActionListener {
 	}
 
 	/* ステータスを初期化 */
-	private void init_status() {
-		statusNumber = -1;
-		statusMoney = 0;
+	private void initStatus() {
+		statusNumMoney = new AnyNumMoney[statusMax];
+		for (int i = 0; i < statusNumMoney.length; i++) {
+			statusNumMoney[i] = new AnyNumMoney();
+		}
+		statusNumMoney[0].num = 0;
+		System.out.println(statusNumMoney[0].num + " , " + AnyNumMoney.num_len);
 	}
 
 	/* 賭ける場所のボタン */
 	private void setJBtnNumbers() {
 		System.out.println(Util.getMethodName());
-		System.out.println("nnsize"+numbersTable.numbers.size());
+		System.out.println("nnsize" + numbersTable.numbers.size());
 		int btn_x = 200;
 		int width = 90, height = 25;
 		for (int i = 0, x = btn_x, y = 10; i < numbersTable.numbers.size(); i++, x += (width + 10)) {
@@ -168,13 +176,13 @@ public class Table extends JFrame implements ActionListener {
 
 	/* ラベルの設定 */
 	private void setJLbl() {
-		JLblStatusNumber.setText("no Select");
-		JLblStatusMoney.setText("no Select");
+		JLblStatusNumber.setText("no");
+		JLblStatusMoney.setText("no");
 
-		int width = 150, height = 15;
-		JLblStatusNumber.setBounds(20, setBtnMoneyYLine + 10, width, height);
+		int width = 35, height = 100;
+		JLblStatusNumber.setBounds(70, setBtnMoneyYLine + 40, width, height);
 
-		JLblStatusMoney.setBounds(20, setBtnMoneyYLine + 10 + height, width, height);
+		JLblStatusMoney.setBounds(20, setBtnMoneyYLine + 40, width, height);
 
 		setBtnMoneyYLine += (5 + height * 2);
 
@@ -188,8 +196,9 @@ public class Table extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		System.out.println(Util.getMethodName());
 		String pushBtn = e.getActionCommand(); // 押したボタンの表示名(String)
-		System.out.printf("(statusLock,pushBtn,statusNumber,statusMoney) = (%b,%s,%d,%d) \n", statusLock, pushBtn,
-				statusNumber, statusMoney);
+		System.out.printf("(statusLock,pushBtn) = (%b,%s) \n", statusLock, pushBtn);
+
+		StringBuilder jLblStr = new StringBuilder("<html>"); // JLabelにて表示する内容．
 
 		if (e.getSource() == JBtnExit) { // Exitボタンでプログラムごと終了
 			System.exit(-1);
@@ -200,32 +209,48 @@ public class Table extends JFrame implements ActionListener {
 		}
 
 		if (e.getSource() == JBtnMoneyClear) { // 賭金を0にする
-			statusMoney = 0;
-			JLblStatusMoney.setText("Select Money is " + Integer.toString(statusMoney));
+			initStatus();
+
+			JLblStatusNumber.setText("no");
+			JLblStatusMoney.setText("no");
 			return;
 		}
 
 		for (int i = 0; i < numbersTable.numbers.size(); i++) { // 賭けるNumberを設定する
 			if (e.getSource() == JBtnNumber[i]) {
-				statusNumber = i;
-				JLblStatusNumber.setText("Select Num is " + Integer.toString(statusNumber));
+				AnyNumMoney.num_len = AnyNumMoney.num_len % statusNumMoney.length;
+				statusNumMoney[AnyNumMoney.num_len++].num = i;
+				for (int a = 0; a < statusNumMoney.length; a++) {
+					jLblStr.append(Integer.toString(statusNumMoney[a].num) + "<br>");
+				}
+				jLblStr.append("</html>");
+				JLblStatusNumber.setText(jLblStr.toString());
 				return;
 			}
 		}
 
 		for (int i = 0; i < btnNumSPPattern.length; i++) { // 賭ける特殊な場所を設定する
 			if (e.getSource() == JBtnNumSP[i]) {
-				statusNumber = numbersTable.numbers.size() + i;
-				System.out.println(Integer.toString(statusNumber));
-				JLblStatusNumber.setText("Select Num is " + btnNumSPPattern[i]);
+				AnyNumMoney.num_len = AnyNumMoney.num_len % statusNumMoney.length;
+				statusNumMoney[AnyNumMoney.num_len++].num = numbersTable.numbers.size() + i;
+				for (int a = 0; a < statusNumMoney.length; a++) {
+					jLblStr.append(btnNumSPPattern[i] + "<br>");
+				}
+				jLblStr.append("</html>");
+				JLblStatusNumber.setText(jLblStr.toString());
 				return;
 			}
 		}
 
 		for (int i = 0; i < btnMoneyPattern.length; i++) {
 			if (e.getSource() == JBtnMoney[i]) { // 賭けるお金を足す
-				statusMoney += btnMoneyPattern[i];
-				JLblStatusMoney.setText("Select Money is " + Integer.toString(statusMoney));
+				AnyNumMoney.money_len = AnyNumMoney.money_len % statusNumMoney.length;
+				statusNumMoney[AnyNumMoney.money_len++].money = btnMoneyPattern[i];
+				for (int a = 0; a < statusNumMoney.length; a++) {
+					jLblStr.append(Integer.toString(statusNumMoney[a].money) + "<br>");
+				}
+				jLblStr.append("</html>");
+				JLblStatusMoney.setText(jLblStr.toString());
 				return;
 			}
 		}
@@ -241,13 +266,19 @@ public class Table extends JFrame implements ActionListener {
 		return statusLock;
 	}
 
-	/* 現在の賭けている番号を返す */
-	public int getNumber() {
-		return statusNumber;
+	// /* 現在の賭けている番号を返す */
+	// public AnyNumMoney[] getNumber() {
+	// return statusNumber;
+	// }
+
+	// /* 現在の賭けている金額を返す */
+	// public int getMoney() {
+	// return statusMoney;
+	// }
+
+	/* 現在の賭けている場所と金額 */
+	public AnyNumMoney[] getNumMoney() {
+		return statusNumMoney;
 	}
 
-	/* 現在の賭けている金額を返す */
-	public int getMoney() {
-		return statusMoney;
-	}
 }
