@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class NumbersTable {
 	public static ArrayList<Number> numbers = new ArrayList<Number>();
 
-	public NumbersTable() {
+	public NumbersTable() { /* 多分これ，new するたびに追加addされる． */
 
 		numbers.add(new Number("0", Number.Range.ZERO, Number.Color.GREEN));
 		numbers.add(new Number("1", Number.Range.SMALL, Number.Color.RED));

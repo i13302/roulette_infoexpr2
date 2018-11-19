@@ -39,8 +39,8 @@ public class Table extends JFrame implements ActionListener {
 
 	private boolean statusLock = false; // 選択をロック true...Locked,False...Open
 
-	private int setBtnNumberYLine; // y軸のどこまでボタンが設置されているのか場所
-	private int setBtnMoneyYLine; // 同賭金
+	private int setBtnNumberYLine=0; // y軸のどこまでボタンが設置されているのか場所
+	private int setBtnMoneyYLine=0; // 同賭金
 
 	private JButton JBtnMoneyClear = new JButton("Clear"); // 選択したお金を0に戻す
 	private JButton JBtnExit = new JButton("Exit"); // 強制終了
@@ -85,7 +85,7 @@ public class Table extends JFrame implements ActionListener {
 	/* 賭ける場所のボタン */
 	private void setJBtnNumbers() {
 		System.out.println(Util.getMethodName());
-
+		System.out.println("nnsize"+numbersTable.numbers.size());
 		int btn_x = 200;
 		int width = 90, height = 25;
 		for (int i = 0, x = btn_x, y = 10; i < numbersTable.numbers.size(); i++, x += (width + 10)) {
