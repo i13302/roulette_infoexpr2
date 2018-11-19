@@ -49,7 +49,7 @@ public class Payment {
 		else if (playerAddress >= 45 && playerAddress <= 46) {
 			Number.Color playerColor = getColorByAddress(playerAddress);
 			if (playerColor == winNumber.getColor()) {
-				dealer.sendCache(player, player.getCoin() * 3);
+				dealer.sendCache(player, player.getCoin() * 2);
 				return;
 			}
 		}
