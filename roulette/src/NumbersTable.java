@@ -51,8 +51,8 @@ public class NumbersTable {
 
 	public static SpecialNumbers sNumbers;
 
-	public SpecialNumbers getSpecialNumberByAddress(int address) {
-		int index = address - this.numbers.size();
+	public static SpecialNumbers getSpecialNumberByAddress(int address) {
+		int index = address - numbers.size();
 		System.out.println("index: " + index);
 
 		return SpecialNumbers.values()[index];

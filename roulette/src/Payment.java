@@ -1,5 +1,5 @@
 public class Payment {
-	private static final NumbersTable numTable = new NumbersTable();
+	// private static final NumbersTable numTable = new NumbersTable();
 
 	public static void calc(Player player, Player dealer, int stopAddress) {
 		int playerAddress = player.getAddress();
@@ -20,7 +20,7 @@ public class Payment {
 
 		// アウトサイドベットの判定
 		// -- Range判定
-		switch (numTable.getSpecialNumberByAddress(playerAddress)) {
+		switch (NumbersTable.getSpecialNumberByAddress(playerAddress)) {
 		// -- Range判定
 		case SMALL:
 		case MIDDLE:
@@ -86,7 +86,7 @@ public class Payment {
 	}
 
 	private static Number getNumberByAddress(int address) {
-		return numTable.numbers.get(address);
+		return NumbersTable.numbers.get(address);
 	}
 
 	// 偶数判定
