@@ -1,10 +1,7 @@
 import java.util.ArrayList;
 
 public class NumbersTable {
-	public ArrayList<Number> numbers = new ArrayList<Number>(new ArrayList<Numbers>(){
-
-	// public NumbersTable() {
-
+	public static ArrayList<Number> numbers = new ArrayList<Number>(){{
 		add(new Number("0", Number.Range.ZERO, Number.Color.GREEN));
 		add(new Number("1", Number.Range.SMALL, Number.Color.RED));
 		add(new Number("2", Number.Range.SMALL, Number.Color.BLACK));
@@ -43,5 +40,5 @@ public class NumbersTable {
 		add(new Number("35", Number.Range.LARGE, Number.Color.BLACK));
 		add(new Number("36", Number.Range.LARGE, Number.Color.RED));
 		add(new Number("00", Number.Range.ZERO, Number.Color.GREEN));
-	});
+	}};
 }
