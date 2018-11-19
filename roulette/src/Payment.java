@@ -5,55 +5,75 @@ public class Payment {
 		int playerAddress = player.getAddress();
 		Number winNumber = getNumberByAddress(stopAddress);
 		// インサイドベットの判定
+		if (playerAddress < 0) {
+			return;
+		}
 		if (playerAddress >= 0 && playerAddress <= 37) {
 			if (isWinning36(player, stopAddress)) {
 				dealer.sendCache(player, player.getCoin() * 36);
 				return;
 			}
+			player.sendCache(dealer, player.getCoin());
+			return;
 		}
+		System.out.println("playerAddress: " + playerAddress);
+
 		// アウトサイドベットの判定
 		// -- Range判定
-		else if (playerAddress >= 38 && playerAddress <= 40) {
+		switch (numTable.getSpecialNumberByAddress(playerAddress)) {
+		// -- Range判定
+		case SMALL:
+		case MIDDLE:
+		case LARGE:
 			Number.Range playerRange = getRangeByAddress(playerAddress);
 			if (playerRange == winNumber.getRange()) {
+				System.out.println("Result: SMALL");
+				System.out.println("Result: MIDDLE");
+				System.out.println("Result: LARGE");
 				dealer.sendCache(player, player.getCoin() * 3);
 				return;
 			}
-		}
-		// -- High and Low
-		else if (playerAddress >= 41 && playerAddress <= 42) {
-			// Low判定
-			if (playerAddress == 41 && isLow(stopAddress)) {
+			break;
+		case LOW:
+			if (isLow(stopAddress)) {
+				System.out.println("Result: LOW");
 				dealer.sendCache(player, player.getCoin() * 2);
 				return;
 			}
-			// High判定
-			if (playerAddress == 42 && isHigh(stopAddress)) {
+			break;
+		case HIGH:
+			if (isHigh(stopAddress)) {
+				System.out.println("Result: LOW");
 				dealer.sendCache(player, player.getCoin() * 2);
 				return;
 			}
-		}
+			break;
 		// -- Parity
-		else if (playerAddress >= 43 && playerAddress <= 44) {
-			if (playerAddress == 43 && isEven(stopAddress)) {
+		case PARILLINEN:
+			if (isEven(stopAddress)) {
+				System.out.println("Result: PARILLINEN");
 				dealer.sendCache(player, player.getCoin() * 2);
 				return;
 			}
-
-			if (playerAddress == 44 && !isEven(stopAddress)) {
+			break;
+		case PARITON:
+			if (!isEven(stopAddress)) {
+				System.out.println("Result: PARITON");
 				dealer.sendCache(player, player.getCoin() * 2);
 				return;
 			}
-		}
+			break;
 		// -- Color
-		else if (playerAddress >= 45 && playerAddress <= 46) {
+		case RED:
+		case BLACK:
 			Number.Color playerColor = getColorByAddress(playerAddress);
 			if (playerColor == winNumber.getColor()) {
+				System.out.println("Result: BLACK or RED");
 				dealer.sendCache(player, player.getCoin() * 2);
 				return;
 			}
+			break;
 		}
-		// 負けたとき
 		player.sendCache(dealer, player.getCoin());
 	}
 
@@ -63,17 +83,6 @@ public class Payment {
 		} else {
 			return false;
 		}
-	}
-
-	private static boolean isWinningColor(Player player, int stopAddress) {
-		Number playerNumber = getPlayerNumber(player);
-		Number winNumber = getNumberByAddress(stopAddress);
-		return playerNumber.getColor() == winNumber.getColor();
-	}
-
-	// Playerが掛けた番号を返すメソッド
-	private static Number getPlayerNumber(Player player) {
-		return getNumberByAddress(player.getAddress());
 	}
 
 	private static Number getNumberByAddress(int address) {

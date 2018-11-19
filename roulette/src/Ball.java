@@ -169,7 +169,7 @@ class BallMain extends JPanel implements Runnable {
 
 	/* 数字に対応する色に合わせて，g.setColor()を行う． */
 	private void setColorAccordeNum(Graphics g, int num) {
-		Number.Color getColor = NumbersTable.numbers.get(num).getColor();
+		Number.Color getColor = numbersTable.numbers.get(num).getColor();
 		if (getColor == Number.Color.BLACK) {
 			g.setColor(myColor.BLACK);
 		} else if (getColor == Number.Color.RED) {
@@ -193,7 +193,7 @@ class BallMain extends JPanel implements Runnable {
 		this.setColorAccordeNum(g, this.nowBallValue);
 		g.setFont(new Font("Arial", Font.PLAIN, 50));
 //		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
-		g.drawString(NumbersTable.numbers.get(this.nowBallValue).getStrNum(), center.x - miniCircleR / 2 + 30,
+		g.drawString(numbersTable.numbers.get(this.nowBallValue).getStrNum(), center.x - miniCircleR / 2 + 30,
 				center.y + 15);
 
 		g.setColor(myColor.WHITE);
@@ -274,7 +274,7 @@ class BallMain extends JPanel implements Runnable {
 			// g.drawString(Integer.toString(i), drawStrNum.x, drawStrNum.y); // 文字盤を書く
 
 			// g.drawString(Integer.toString(num), drawStrNum.x, drawStrNum.y);
-			g.drawString(NumbersTable.numbers.get(num).getStrNum(), drawStrNum.x, drawStrNum.y);
+			g.drawString(numbersTable.numbers.get(num).getStrNum(), drawStrNum.x, drawStrNum.y);
 
 		}
 	}
