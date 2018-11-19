@@ -5,7 +5,7 @@ public class InforMation extends JFrame {
 	private int playerMoney;
 	private int dealerMoney;
 
-	private String gameInfo = "<html>1. 賭ける場所と金額を設定します．<br>&nbsp;&nbsp;制限時間を過ぎてしまうと，賭けられなくなるのでお早めに．<br> 2. 自動でルーレットが始まります．当たるといいね！<br> 3.終了後，支払いが行われます．4. 1.に戻ります．いっぱい楽しんでね！<br>";
+	private String gameInfo = "<html>1. 賭ける場所と金額を設定します．<br>&nbsp;&nbsp;制限時間を過ぎてしまうと，賭けられなくなるのでお早めに．<br> 2. 自動でルーレットが始まります．当たるといいね！<br> 3.終了後，支払いが行われます．<br>4. 1.に戻ります．いっぱい楽しんでね！<br>";
 	JFrame jframe;
 	JLabel jLabel = new JLabel();
 
