@@ -35,6 +35,7 @@ public class Table extends JFrame implements ActionListener {
 
 	private int statusMax = 5; // 賭けれる個数
 	private AnyNumMoney[] statusNumMoney; // 選択した場所とお金．多点賭け対応．
+	private AnyNumMoney[] retNumMoney; // 値を渡す用
 
 	private boolean statusLock = false; // 選択をロック true...Locked,False...Open
 
@@ -75,14 +76,20 @@ public class Table extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	/* 自作クラスの固定配列を生成 */
+	private AnyNumMoney[] makeAnyNumMoneyArray(int size) {
+		AnyNumMoney[] ret = new AnyNumMoney[size];
+		for (int i = 0; i < size; i++) {
+			ret[i] = new AnyNumMoney();
+		}
+		return ret;
+	}
+
 	/* ステータスを初期化 */
 	private void initStatus() {
-		statusNumMoney = new AnyNumMoney[statusMax];
-		for (int i = 0; i < statusNumMoney.length; i++) {
-			statusNumMoney[i] = new AnyNumMoney();
-		}
+		statusNumMoney = this.makeAnyNumMoneyArray(statusMax);
 		statusNumMoney[0].num = 0;
-		System.out.println(statusNumMoney[0].num + " , " + AnyNumMoney.num_len);
+		System.out.println(statusNumMoney[0].num + " , " + AnyNumMoney.numNext);
 	}
 
 	/* 賭ける場所のボタン */
@@ -207,6 +214,20 @@ public class Table extends JFrame implements ActionListener {
 		return Integer.toString(x);
 	}
 
+	/* 正規化を行う */
+	private void anyNumMoneyNormalize() {
+		int size = 0; // 次につくる配列のサイズを計測
+		int start = Math.min(AnyNumMoney.numNext, AnyNumMoney.moneyNext); // 最低限必ずここまでは行っているため
+		for (int i = start; (statusNumMoney[i].num != AnyNumMoney.init)
+				&& (statusNumMoney[i].money != AnyNumMoney.init); i++, size++) {
+			; // 配列のどこまで，有効な値(初期値と異なる)のか計測する
+		}
+		retNumMoney = makeAnyNumMoneyArray(size);
+		for (int i = 0; i < size; i++) {
+			retNumMoney[i] = statusNumMoney[i];
+		}
+	}
+
 	/* イベント入力時 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -235,8 +256,8 @@ public class Table extends JFrame implements ActionListener {
 
 		for (int i = 0; i < NumbersTable.numbers.size(); i++) { // 賭けるNumberを設定する
 			if (e.getSource() == JBtnNumber[i]) {
-				AnyNumMoney.num_len = AnyNumMoney.num_len % statusNumMoney.length;
-				statusNumMoney[AnyNumMoney.num_len++].num = i;
+				AnyNumMoney.numNext = AnyNumMoney.numNext % statusNumMoney.length;
+				statusNumMoney[AnyNumMoney.numNext++].num = i;
 				for (int a = 0; a < statusNumMoney.length; a++) {
 					String str = convertNumToString(statusNumMoney[a].num);
 					jLblStr.append(str + "<br>");
@@ -249,8 +270,8 @@ public class Table extends JFrame implements ActionListener {
 
 		for (int i = 0; i < btnNumSPPattern.length; i++) { // 賭ける特殊な場所を設定する
 			if (e.getSource() == JBtnNumSP[i]) {
-				AnyNumMoney.num_len = AnyNumMoney.num_len % statusNumMoney.length;
-				statusNumMoney[AnyNumMoney.num_len++].num = NumbersTable.numbers.size() + i;
+				AnyNumMoney.numNext = AnyNumMoney.numNext % statusNumMoney.length;
+				statusNumMoney[AnyNumMoney.numNext++].num = NumbersTable.numbers.size() + i;
 				for (int a = 0; a < statusNumMoney.length; a++) {
 					String str = convertNumToString(statusNumMoney[a].num);
 					jLblStr.append(str + "<br>");
@@ -261,10 +282,10 @@ public class Table extends JFrame implements ActionListener {
 			}
 		}
 
-		for (int i = 0; i < btnMoneyPattern.length; i++) {
-			if (e.getSource() == JBtnMoney[i]) { // 賭けるお金を足す
-				AnyNumMoney.money_len = AnyNumMoney.money_len % statusNumMoney.length;
-				statusNumMoney[AnyNumMoney.money_len++].money = btnMoneyPattern[i];
+		for (int i = 0; i < btnMoneyPattern.length; i++) { // 賭けるお金を設定する
+			if (e.getSource() == JBtnMoney[i]) {
+				AnyNumMoney.moneyNext = AnyNumMoney.moneyNext % statusNumMoney.length;
+				statusNumMoney[AnyNumMoney.moneyNext++].money = btnMoneyPattern[i];
 				for (int a = 0; a < statusNumMoney.length; a++) {
 					String str = convertMoneyToString(statusNumMoney[a].money);
 					jLblStr.append(str + "<br>");
@@ -288,7 +309,8 @@ public class Table extends JFrame implements ActionListener {
 
 	/* 現在の賭けている場所と金額 */
 	public AnyNumMoney[] getNumMoney() {
-		return statusNumMoney;
+		this.anyNumMoneyNormalize();
+		return retNumMoney;
 	}
 
 }
