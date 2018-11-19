@@ -25,19 +25,30 @@ class Cast {
 }
 
 class NumOrder {
-	private final int numNumber = 38;
+	// private final int numNumber = NumbersTable.numbers.size();
+
+	/* arr[0番目]->5，arr[1番目-]>22 ルーレットの順番 */
 	public final static int[] numOrder = { 5, 22, 34, 15, 3, 24, 36, 13, 1, 37, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6,
-			21, 33, 16, 4, 23, 35, 14, 2, 0, 28, 9, 26, 30, 11, 7, 20, 32, 17 }; // arr[0番目]->5，arr[1番目-]>22
-	public int[] numSearch = new int[numNumber]; // arr[5]->0番目，arr[22]->1番目
+			21, 33, 16, 4, 23, 35, 14, 2, 0, 28, 9, 26, 30, 11, 7, 20, 32, 17 };
+
+	// public int[] numSearch = new int[numNumber]; // arr[5]->0番目，arr[22]->1番目
 
 	public NumOrder() {
-		search();
+		// search();
 	}
 
-	private void search() {
-		for (int i = 0; i < numNumber; i++) {
-			numSearch[numOrder[i]] = i; // TODO 高速化
+	// public int search() {
+	// for (int i = 0; i < numNumber; i++) {
+	// numSearch[numOrder[i]] = i; // TODO 高速化
+	// }
+	// }
+
+	public int search(int x) {
+		int i;
+		for (i = 0; x != numOrder[i]; i++) {
+			; /* 値が何番目に存在するか，検索している */
 		}
+		return i;
 	}
 
 }
@@ -51,6 +62,7 @@ public class Ball extends JDialog {
 
 	public Ball(int sn) {
 		this.stopNum = sn;
+		System.out.println(sn);
 		this.initJFrame();
 		this.ckDoingBallMain();
 	}
@@ -105,7 +117,9 @@ class BallMain extends JPanel implements Runnable {
 	private NumbersTable numbersTable = new NumbersTable();
 
 	public BallMain(int sn, int xSize, int ySize) {
-		this.stopNum = numorder.numSearch[sn];
+		// this.stopNum = numorder.numSearch[sn];
+		this.stopNum = numorder.search(sn);
+		System.out.println(sn + "," + this.stopNum);
 		this.Size.x = xSize;
 		this.Size.y = ySize;
 		this.initJPanel(xSize, ySize);
@@ -161,7 +175,7 @@ class BallMain extends JPanel implements Runnable {
 
 	/* 数字に対応する色に合わせて，g.setColor()を行う． */
 	private void setColorAccordeNum(Graphics g, int num) {
-		Number.Color getColor = numbersTable.numbers.get(num).getColor();
+		Number.Color getColor = NumbersTable.numbers.get(num).getColor();
 		if (getColor == Number.Color.BLACK) {
 			g.setColor(MyColor.BLACK);
 		} else if (getColor == Number.Color.RED) {
@@ -179,18 +193,16 @@ class BallMain extends JPanel implements Runnable {
 
 		g.setColor(MyColor.WHITE);
 		int miniCircleR = 100;
-		g.fillOval(center.x - miniCircleR / 2, center.y - miniCircleR / 2, miniCircleR, miniCircleR);
+		g.fillOval(center.x - miniCircleR / 2, center.y - miniCircleR / 2, miniCircleR, miniCircleR); // 盤の中心に白円をつくる
 
 		/* 文字色 */
 		this.setColorAccordeNum(g, this.nowBallValue);
 		g.setFont(new Font("Arial", Font.PLAIN, 50));
-//		g.drawString(Integer.toString(this.nowBallValue), this.Size.x / 2, this.Size.y - 50);
-		g.drawString(numbersTable.numbers.get(this.nowBallValue).getStrNum(), center.x - miniCircleR / 2 + 30,
-				center.y + 15);
+		g.drawString(NumbersTable.numbers.get(this.nowBallValue).getStrNum(), center.x - miniCircleR / 2 + 30,
+				center.y + 15); // 現在ボールが居る場所を表示する
 
 		g.setColor(MyColor.WHITE);
-//		g.drawString("●", nowBallPoint.x, nowBallPoint.y); // ボール
-		g.fillOval(nowBallPoint.x, nowBallPoint.y, 10, 10);
+		g.fillOval(nowBallPoint.x, nowBallPoint.y, 10, 10); // ボール
 	}
 
 	/* ボールのアニメーション */
@@ -263,10 +275,8 @@ class BallMain extends JPanel implements Runnable {
 			iPoint drawStrNum = new iPoint(); // 文字盤の座標
 			drawStrNum = Cast.ToIntFromDbl(equation(circleR - 20, angle * (i + 1) - angle / 2.0));
 			g.setColor(MyColor.WHITE);
-			// g.drawString(Integer.toString(i), drawStrNum.x, drawStrNum.y); // 文字盤を書く
+			g.drawString(NumbersTable.numbers.get(num).getStrNum(), drawStrNum.x, drawStrNum.y); // 文字盤を書く
 
-			// g.drawString(Integer.toString(num), drawStrNum.x, drawStrNum.y);
-			g.drawString(numbersTable.numbers.get(num).getStrNum(), drawStrNum.x, drawStrNum.y);
 
 		}
 	}
