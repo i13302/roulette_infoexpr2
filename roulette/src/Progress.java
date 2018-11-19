@@ -37,7 +37,7 @@ public class Progress {
 
 			AnyNumMoney[] ret = table.getNumMoney(); // 賭けているデータを取得
 			for (int i = 0; i < ret.length; i++) {
-				System.out.println(ret[i].num + "," + ret[i].money); // 表示しているだけ
+				System.out.println("ret: "+ret[i].num + "," + ret[i].money); // 表示しているだけ
 			}
 
 			Roulette roulette = new Roulette();

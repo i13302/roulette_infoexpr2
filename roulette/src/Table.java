@@ -8,6 +8,8 @@
 import javax.swing.*;
 import javax.swing.JFrame;
 import java.awt.event.*;
+import javax.imageio.ImageIO;
+import java.net.URL;
 
 /* Debug用 いずれ消したい */
 class Util {
@@ -23,12 +25,15 @@ class Util {
 
 public class Table extends JFrame implements ActionListener {
 	private JButton[] JBtnNumber = new JButton[NumbersTable.numbers.size()]; // 場所のボタン
-	private String[] btnNumSPPattern = { "SMALL", "MIDDLE", "LARGE", "LOW", "HIGH", "PARILLINEN", "PARITON", "RED",
-			"BALCK" }; // 特殊な場所
+	private ImageIcon[] JBtnNumberIcon = new ImageIcon[NumbersTable.numbers.size()]; // 場所のボタンの画像
+	private String[] btnNumSPPattern = NumbersTable.StringSpecialNumbers; // 特殊な場所 // TODO.置換え！
 	private JButton[] JBtnNumSP = new JButton[btnNumSPPattern.length]; // SMALL，MIDDLE...のボタン
+	private ImageIcon[] JBtnNumSPIcon = new ImageIcon[btnNumSPPattern.length]; // 特殊な場所のボタンの画像
 
 	private int[] btnMoneyPattern = { 1, 5, 15, 50 }; // 賭けるパターン
 	private JButton[] JBtnMoney = new JButton[btnMoneyPattern.length]; // お金のボタン
+	// private ImageIcon[] JBtnMoneyIcon = new ImageIcon[btnMoneyPattern.length]; //
+	// お金のボタンの画像
 
 	private JLabel JLblStatusNumber = new JLabel(); // 選択した場所を表示
 	private JLabel JLblStatusMoney = new JLabel(); // 選択したお金を表示
@@ -58,13 +63,14 @@ public class Table extends JFrame implements ActionListener {
 		// setLayout(new FlowLayout()); // レイアウトの設定
 		this.setLayout(null);
 
-		initJFrame();
-		initStatus();
+		this.initJFrame();
+		this.initStatus();
 
-		setJBtnNumbers();
-		setJBtnMoneys();
-		setJBtnExit();
-		setJLbl();
+		this.setImageIcon();
+		this.setJBtnNumbers();
+		this.setJBtnMoneys();
+		this.setJBtnExit();
+		this.setJLbl();
 
 	}
 
@@ -92,6 +98,29 @@ public class Table extends JFrame implements ActionListener {
 		System.out.println(statusNumMoney[0].num + " , " + AnyNumMoney.numNext);
 	}
 
+	/* 画像の設定 */
+	private void setImageIcon() {
+		System.out.println(Util.getMethodName());
+		int i = 0;
+		for (; i < NumbersTable.numbers.size(); i++) {
+			String ImgFile = getClass().getResource(".") + "../ButtonIMG/rouletteNum"+Integer.toString(i)+".png";
+			System.out.println(ImgFile);
+			JBtnNumberIcon[i] = new ImageIcon(ImgFile);
+		}
+		// for (; i < NumbersTable.SpecialNumbers.values().length; i++) {
+		// JBtnNumSPIcon[i] = new ImageIcon("./ButtonIMG/roulette" +
+		// btnNumSPPattern[i]);
+		// }
+	}
+	
+	private Color setColor(int x){
+		
+	}
+	
+	private Color setColor(String s){
+		
+	}
+
 	/* 賭ける場所のボタン */
 	private void setJBtnNumbers() {
 		System.out.println(Util.getMethodName());
@@ -101,6 +130,7 @@ public class Table extends JFrame implements ActionListener {
 		for (int i = 0, x = btn_x, y = 10, most_y = 0; i < NumbersTable.numbers.size(); i++, x += (width + 10)) {
 			// TODO 画像で置き換える
 			JBtnNumber[i] = new JButton(NumbersTable.numbers.get((i) % NumbersTable.numbers.size()).getStrNum());
+			// JBtnNumber[i] = new JButton();
 			JBtnNumber[i].addActionListener(this);
 			JBtnNumber[i].setBounds(x, y, width, height);
 			add(JBtnNumber[i]);
@@ -216,10 +246,11 @@ public class Table extends JFrame implements ActionListener {
 
 	/* 正規化を行う */
 	private void anyNumMoneyNormalize() {
-		int size = 0; // 次につくる配列のサイズを計測
-		int start = Math.min(AnyNumMoney.numNext, AnyNumMoney.moneyNext); // 最低限必ずここまでは行っているため
+		int start = Math.min(AnyNumMoney.numNext, AnyNumMoney.moneyNext) - 1; // 最低限必ずここまでは行っているため
+		int size = start; // 次につくる配列のサイズを計測
 		for (int i = start; (statusNumMoney[i].num != AnyNumMoney.init)
 				&& (statusNumMoney[i].money != AnyNumMoney.init); i++, size++) {
+			System.out.println("size: " + size);
 			; // 配列のどこまで，有効な値(初期値と異なる)のか計測する
 		}
 		retNumMoney = makeAnyNumMoneyArray(size);

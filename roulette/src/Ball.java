@@ -24,14 +24,6 @@ class Cast {
 	}
 }
 
-/* よく使う色 */
-class myColor {
-	public static final Color RED = new Color(0xFF, 0, 0);
-	public static final Color GREEN = new Color(0, 0xFF, 0);
-	public static final Color BLACK = new Color(0, 0, 0);
-	public static final Color WHITE = new Color(0xFF, 0xFF, 0xFF);
-}
-
 class NumOrder {
 	private final int numNumber = 38;
 	public final static int[] numOrder = { 5, 22, 34, 15, 3, 24, 36, 13, 1, 37, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6,
