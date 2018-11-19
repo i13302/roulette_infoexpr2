@@ -8,8 +8,6 @@
 import javax.swing.*;
 import javax.swing.JFrame;
 import java.awt.event.*;
-import javax.imageio.ImageIO;
-import java.net.URL;
 import java.awt.Color;
 
 /* Debug用 いずれ消したい */
