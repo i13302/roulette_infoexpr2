@@ -11,7 +11,7 @@ public class InforMation extends JFrame {
 
 	private StringBuilder buf = new StringBuilder(); // 表示内容
 
-	public InforMation(Player player, Player dealer) {S
+	public InforMation() {
 		this.setTitle("ルーレットの説明");
 		this.setLayout(new FlowLayout());
 		this.setSize(500, 300); // フレームのサイズを指定
@@ -19,10 +19,9 @@ public class InforMation extends JFrame {
 		this.setLocationRelativeTo(null); // フレームの表示位置を中央に
 		this.setVisible(true); // フレームの表示・非表示を指定
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// ×を押した時の処理
-		this.setMoney(player, dealer);
 	}
 
-	public void setMoney(Player player, Player dealer) {
+	public void setMoney(Player player, Player dealer, int time) { // Public なんだから，手動で呼び出せ．
 		System.out.println("setMoney");
 		this.playerMoney = player.getWallet().getCache();
 		this.dealerMoney = dealer.getWallet().getCache();
@@ -30,12 +29,18 @@ public class InforMation extends JFrame {
 		StringBuilder moneyInfo = new StringBuilder();
 		moneyInfo.append("Player: ");
 		moneyInfo.append(Integer.toString(this.playerMoney));
-		moneyInfo.append("<br>Dealer: ");
+		moneyInfo.append("<br>");
+		moneyInfo.append("Dealer: ");
 		moneyInfo.append(Integer.toString(this.dealerMoney));
+		moneyInfo.append("<br>");
 
 		StringBuilder showStrBuild = new StringBuilder();
 		showStrBuild.append(gameInfo);
 		showStrBuild.append(moneyInfo.toString());
+		showStrBuild.append("残り時間: ");
+		showStrBuild.append(Integer.toString(time));
+		showStrBuild.append(" [sec]");
+		showStrBuild.append("<br>");
 		showStrBuild.append("</html>");
 
 		jLabel.setText(showStrBuild.toString()); // TODO 処理に時間がかかって追いつかない．
