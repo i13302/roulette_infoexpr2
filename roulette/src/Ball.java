@@ -1,7 +1,6 @@
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JDialog;
 
-import javax.swing.*;
 import java.awt.*;
 
 class dPoint {
