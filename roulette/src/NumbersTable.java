@@ -49,6 +49,9 @@ public class NumbersTable {
 		SMALL, MIDDLE, LARGE, LOW, HIGH, PARILLINEN, PARITON, RED, BLACK,
 	};
 
+	public static final String[] StringSpecialNumbers = { "SMALL", "MIDDLE", "LARGE", "LOW", "HIGH", "PARILLINEN",
+			"PARITON", "RED", "BALCK" };
+
 	public static SpecialNumbers sNumbers;
 
 	public static SpecialNumbers getSpecialNumberByAddress(int address) {

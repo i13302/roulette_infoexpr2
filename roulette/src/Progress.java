@@ -37,7 +37,7 @@ public class Progress {
 
 			AnyNumMoney[] ret = table.getNumMoney(); // 賭けているデータを取得
 			for (int i = 0; i < ret.length; i++) {
-				System.out.println(ret[i].num + "," + ret[i].money); // 表示しているだけ
+				System.out.println("ret: "+ret[i].num + "," + ret[i].money); // 表示しているだけ
 			}
 			player.setAnyNumsMoney(ret);
 
@@ -45,6 +45,7 @@ public class Progress {
 
 			// Rouletteの停止位置の決定
 			int stopAddress = roulette.getIntRouletteValue();
+			System.out.println("Roulette: "+stopAddress);
 			// Rouletteの回転開始
 			new Ball(stopAddress);
 
