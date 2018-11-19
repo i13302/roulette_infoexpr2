@@ -12,3 +12,8 @@ https://hackmd.io/by2d2QIlQbyduNz53AxSeQ
 1. 極座標系 - Wikipedia，https://ja.wikipedia.org/wiki/%E6%A5%B5%E5%BA%A7%E6%A8%99%E7%B3%BB，2018/11/15
 1. OOPL4.pdf，http://guppy.eng.kagawa-u.ac.jp/~kagawa/2018/OOPL/Text/OOPL4.pdf，2018/11/15
 1. OOPL6.pdf，http://guppy.eng.kagawa-u.ac.jp/~kagawa/2018/OOPL/Text/OOPL6.pdf，2018/11/15
+1. InputStream (Java Platform SE 7 ),https://docs.oracle.com/javase/jp/7/api/java/io/InputStream.html,2018/11/19
+1. ImageIO (Java Platform SE 8 ),https://docs.oracle.com/javase/jp/8/docs/api/javax/imageio/ImageIO.html,2018/11/19
+1. ByteArrayInputStream (Java Platform SE 8 ),https://docs.oracle.com/javase/jp/8/docs/api/java/io/ByteArrayInputStream.html,2018/11/19
+1. ClassLoader (Java Platform SE 8 ),https://docs.oracle.com/javase/jp/8/docs/api/java/lang/ClassLoader.html,2018/11/19
+1. Class (Java Platform SE 8 ),https://docs.oracle.com/javase/jp/8/docs/api/java/lang/Class.html#getResource-java.lang.String-,2018/11/19
