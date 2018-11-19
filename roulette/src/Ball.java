@@ -70,6 +70,7 @@ public class Ball extends JDialog {
 
 	public Ball(int sn) {
 		this.stopNum = sn;
+		System.out.println(sn);
 		this.initJFrame();
 		this.ckDoingBallMain();
 	}
