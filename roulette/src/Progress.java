@@ -10,7 +10,7 @@ public class Progress {
 
 		info.setMoney(player, dealer, 5);
 
-		while (!(player.getWallet().isInsolvency() && dealer.getWallet().isInsolvency())) {
+		while (!(player.getWallet().isInsolvency() || dealer.getWallet().isInsolvency())) {
 			Table table = new Table();
 			table.setVisible(true); // Windowを開く
 			for (int i = 0; i < 5; i++) {
@@ -47,9 +47,10 @@ public class Progress {
 
 			// 掛けた場所への判定と、支払い処理
 			Payment.calcEach(player, dealer, stopAddress);
-
 			info.setMoney(player, dealer, 0);
+
 		}
+
 		// 7. 終了
 		System.out.println("END");
 		System.exit(0);
