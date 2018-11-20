@@ -235,6 +235,7 @@ public class Table extends JFrame implements ActionListener {
 
 	/* 正規化を行う */
 	private void anyNumMoneyNormalize() {
+
 		int start = Math.min(AnyNumMoney.numNext, AnyNumMoney.moneyNext) - 1; // 最低限必ずここまでは行っているため
 		if (start == -1) { // 1つも賭けていない
 			retNumMoney = makeAnyNumMoneyArray(1);

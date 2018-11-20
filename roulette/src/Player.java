@@ -5,6 +5,7 @@ public class Player {
 	private int coin; // 掛け金
 	private int address; // かけた場所
 
+	private AnyNumMoney anyNumsMoney[];
 
 	public Player(Wallet _wallet) {
 		this.wallet = _wallet;
@@ -33,6 +34,14 @@ public class Player {
 
 	public int getAddress() {
 		return this.address;
+	}
+
+	public AnyNumMoney[] getAnyNumsMoney() {
+		return this.anyNumsMoney;
+	}
+
+	public void setAnyNumsMoney(AnyNumMoney[] _anyNumsMoney) {
+		this.anyNumsMoney = _anyNumsMoney;
 	}
 
 	public boolean sendCache(Player payee, int cache) {

@@ -1,7 +1,7 @@
 public class Progress {
 	// この辺の値は要調整
-	private static final int playerCache = 1000;
-	private static final int dealerCache = 1000;
+	private static final int playerCache = 500;
+	private static final int dealerCache = 500;
 
 	public static void main(String args[]) {
 		Player player = new Player(new Wallet(playerCache));
@@ -30,26 +30,23 @@ public class Progress {
 			}
 			table.setVisible(false); // Windowを閉じる
 
-			// player.setAddress(table.getNumber()); // 変更
-			// System.out.println(player.getAddress());
-			// player.setCoin(table.getMoney()); // 変更
-			// System.out.println(player.getCoin());
-
+			// Debug
 			AnyNumMoney[] ret = table.getNumMoney(); // 賭けているデータを取得
 			for (int i = 0; i < ret.length; i++) {
-				System.out.println("ret: "+ret[i].num + "," + ret[i].money); // 表示しているだけ
+				System.out.println("ret: " + ret[i].num + "," + ret[i].money); // 表示しているだけ
 			}
+			player.setAnyNumsMoney(ret);
 
 			Roulette roulette = new Roulette();
 
 			// Rouletteの停止位置の決定
 			int stopAddress = roulette.getIntRouletteValue();
-			System.out.println("Roulette: "+stopAddress);
+			System.out.println("Roulette: " + stopAddress);
 			// Rouletteの回転開始
 			new Ball(stopAddress);
 
 			// 掛けた場所への判定と、支払い処理
-			Payment.calc(player, dealer, stopAddress);
+			Payment.calcEach(player, dealer, stopAddress);
 
 			info.setMoney(player, dealer, 0);
 		}
