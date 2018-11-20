@@ -16,6 +16,7 @@ public class Payment {
 		}
 		if (playerAddress >= 0 && playerAddress <= 37) {
 			if (isWinning36(anm, stopAddress)) {
+				System.out.println("Winning 36!!");
 				dealer.sendCache(player, anm.money * 36);
 				return;
 			}
@@ -27,7 +28,6 @@ public class Payment {
 		// アウトサイドベットの判定
 		// -- Range判定
 		switch (NumbersTable.getSpecialNumberByAddress(playerAddress)) {
-		// -- Range判定
 		case SMALL:
 		case MIDDLE:
 		case LARGE:
@@ -84,11 +84,7 @@ public class Payment {
 	}
 
 	private static boolean isWinning36(AnyNumMoney anm, int stopAddress) {
-		if (anm.num == stopAddress) {
-			return true;
-		} else {
-			return false;
-		}
+		return anm.num == stopAddress;
 	}
 
 	private static Number getNumberByAddress(int address) {

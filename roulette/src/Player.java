@@ -44,12 +44,8 @@ public class Player {
 		this.anyNumsMoney = _anyNumsMoney;
 	}
 
-	public boolean sendCache(Player payee, int cache) {
-		if (cache < this.wallet.getCache()) {
-			this.wallet.payCache(cache);
-			payee.wallet.payCache(-cache);
-			return true;
-		}
-		return false;
+	public void sendCache(Player payee, int cache) {
+		this.wallet.payCache(cache);
+		payee.wallet.payCache(-cache);
 	}
 }
