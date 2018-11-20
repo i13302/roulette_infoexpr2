@@ -1,8 +1,14 @@
 # rulette_infoexpr2
-https://hackmd.io/by2d2QIlQbyduNz53AxSeQ
 
-## JavaのVersion
-Java >= 9
+## 使用方法
+
+1. 制限時間以内に賭ける場所と金額を設定します．
+2. 自動でルーレットが始まります.
+3. 終了後，支払いが行われます．
+4. 1.に戻ります．
+
+## 動作環境
+- Java >= 9
 
 ## 使用ライブラリ
 1. Abstract Window Toolkit
