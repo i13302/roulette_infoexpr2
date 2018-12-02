@@ -61,7 +61,7 @@ public class Ball extends JDialog {
 
 	public Ball(int sn) {
 		this.stopNum = sn;
-		System.out.println(sn);
+		System.out.println("stopNum: "+sn);
 		this.initJFrame();
 		this.ckDoingBallMain();
 	}
@@ -118,7 +118,7 @@ class BallMain extends JPanel implements Runnable {
 	public BallMain(int sn, int xSize, int ySize) {
 		// this.stopNum = numorder.numSearch[sn];
 		this.stopNum = numorder.search(sn);
-		System.out.println(sn + "," + this.stopNum);
+		System.out.println("stopNum: "+sn + ",stopPlace: " + this.stopNum);
 		this.Size.x = xSize;
 		this.Size.y = ySize;
 		this.initJPanel(xSize, ySize);
