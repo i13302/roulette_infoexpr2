@@ -1,12 +1,14 @@
 public class Payment {
 	// private static final NumbersTable numTable = new NumbersTable();
 
+	// ユーザの賭けた場所を舐めて計算していく
 	public static void calcEach(Player player, Player dealer, int stopAddress) {
 		for (AnyNumMoney anm : player.getAnyNumsMoney()) {
 			calc(player, dealer, stopAddress, anm);
 		}
 	}
 
+	// ユーザの賭けた場所によってインサイドベット、アウトサイドベットの判定を行う
 	public static void calc(Player player, Player dealer, int stopAddress, AnyNumMoney anm) {
 		int playerAddress = anm.num;
 		Number winNumber = getNumberByAddress(stopAddress);
@@ -33,23 +35,18 @@ public class Payment {
 		case LARGE:
 			Number.Range playerRange = getRangeByAddress(playerAddress);
 			if (playerRange == winNumber.getRange()) {
-				System.out.println("Result: SMALL");
-				System.out.println("Result: MIDDLE");
-				System.out.println("Result: LARGE");
 				dealer.sendCache(player, anm.money * 3);
 				return;
 			}
 			break;
 		case LOW:
 			if (isLow(stopAddress)) {
-				System.out.println("Result: LOW");
 				dealer.sendCache(player, anm.money * 2);
 				return;
 			}
 			break;
 		case HIGH:
 			if (isHigh(stopAddress)) {
-				System.out.println("Result: LOW");
 				dealer.sendCache(player, anm.money * 2);
 				return;
 			}
@@ -57,14 +54,12 @@ public class Payment {
 		// -- Parity
 		case PARILLINEN:
 			if (isEven(stopAddress)) {
-				System.out.println("Result: PARILLINEN");
 				dealer.sendCache(player, anm.money * 2);
 				return;
 			}
 			break;
 		case PARITON:
 			if (!isEven(stopAddress)) {
-				System.out.println("Result: PARITON");
 				dealer.sendCache(player, anm.money * 2);
 				return;
 			}
@@ -74,7 +69,6 @@ public class Payment {
 		case BLACK:
 			Number.Color playerColor = getColorByAddress(playerAddress);
 			if (playerColor == winNumber.getColor()) {
-				System.out.println("Result: BLACK or RED");
 				dealer.sendCache(player, anm.money * 2);
 				return;
 			}
@@ -87,6 +81,7 @@ public class Payment {
 		return anm.num == stopAddress;
 	}
 
+	// アドレスから賭けた場所を取り出す
 	private static Number getNumberByAddress(int address) {
 		return NumbersTable.numbers.get(address);
 	}
@@ -96,14 +91,17 @@ public class Payment {
 		return address % 2 == 0;
 	}
 
+	// Low判定
 	private static boolean isLow(int stopAddress) {
 		return (stopAddress >= 1 && stopAddress <= 18);
 	}
 
+	// High判定
 	private static boolean isHigh(int stopAddress) {
 		return (stopAddress >= 19 && stopAddress <= 36);
 	}
 
+	// アドレスから範囲を取得する
 	private static Number.Range getRangeByAddress(int address) {
 		switch (address) {
 		case 38:
@@ -116,6 +114,7 @@ public class Payment {
 		return null;
 	}
 
+	// アドレスから色の判定を返す
 	private static Number.Color getColorByAddress(int address) {
 		switch (address) {
 		case 45:
