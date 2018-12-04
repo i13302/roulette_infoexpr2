@@ -9,6 +9,9 @@ class:
 
 exe:
 	cd ./bin && java Progress
-	
+
+jar:
+	jar cvfm Roulette.jar META-INF/MANIFEST.MF -C bin/ .
+
 clean:
 	rm ./bin/*.class
